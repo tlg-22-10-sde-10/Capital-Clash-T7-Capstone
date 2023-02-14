@@ -17,14 +17,15 @@ public class TradingRoomMenuTwo {
             boolean isSellMenuRunning = true;
             System.out.println("Please enter the stock symbol that you want to sell.");
             String stockSymbol = ui.userInput().toUpperCase();
+
             //handle unrecognized symbol error
-            while (!playerStockMap.containsKey(stockSymbol)) {
+             while (!playerStockMap.containsKey(stockSymbol)) {
                 System.out.println(ANSI_RED+"                          ***This stock is not in your holdings***"+ANSI_RESET);
                 System.out.println(ANSI_RED+"                          ***Please try again and select from your holdings.***\n"+ANSI_RESET);
                 showHoldings(playersStocksLists);
                 System.out.println("Please enter the stock symbol that you want to sell.");
                 stockSymbol = ui.userInput().toUpperCase();
-            }
+        }
 
             String quantityInput = "";
             // edge cases player cannot enter more than what they have
