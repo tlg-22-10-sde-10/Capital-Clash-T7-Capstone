@@ -72,6 +72,7 @@ public class Game {
                                 ui.playerVsBrotherReports(day, player, brother, inventory);
                                 isTradingRoomMenuRunning = false;
                                 // LEAVE TRADING ROOM
+                                //Insert method to go to bedroom
                             } else {
                                 ui.invalidChoice();
                             }
