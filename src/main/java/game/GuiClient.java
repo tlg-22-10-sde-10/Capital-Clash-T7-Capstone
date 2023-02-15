@@ -6,12 +6,7 @@ public class GuiClient implements Runnable {
     @Override
     public void run() {
        GuiLogic guiLogic = new GuiLogic();
-        try {
-            guiLogic.initializeGui();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+       guiLogic.initGui();
     }
 
 
@@ -20,6 +15,5 @@ public class GuiClient implements Runnable {
         guiTesting.run();
 
     }
-
 }
 
