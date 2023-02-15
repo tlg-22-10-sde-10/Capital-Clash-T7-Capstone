@@ -1,7 +1,5 @@
 package game;
 
-import ui.GuiLogic;
-
 public class GuiTesting implements Runnable {
     @Override
     public void run() {
