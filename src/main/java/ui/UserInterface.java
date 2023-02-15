@@ -99,7 +99,7 @@ public class UserInterface {
 
 
 
-    public void displayGameInfo() {
+    public static void displayGameInfo() {
         System.out.println(ANSI_PURPLE + "========================================================================================== \n" + ANSI_RESET +
                 ANSI_GREEN+""+
                 "                                ╔═╗╔═╗╔╦╗╔═╗  ╔═╗╔╦╗╔═╗╦═╗╦ ╦\n" +

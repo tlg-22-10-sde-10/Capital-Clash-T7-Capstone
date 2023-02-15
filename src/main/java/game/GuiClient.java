@@ -1,14 +1,19 @@
 package game;
 
-import javax.swing.*;
+import java.io.IOException;
 
-public class GuiClient extends JFrame {
-   public GuiClient(){
-       setTitle("Capital Clash 2.0");
-       setSize(500,500);
-       setLocationRelativeTo(null);
-       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       setVisible(true);
-   }
+public class GuiClient implements Runnable {
+    @Override
+    public void run() {
+       GuiLogic guiLogic = new GuiLogic();
+       guiLogic.initGui();
+    }
 
+
+    public static void main(String[] args) {
+        GuiClient guiTesting = new GuiClient();
+        guiTesting.run();
+
+    }
 }
+

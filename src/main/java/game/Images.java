@@ -1,4 +1,5 @@
 package game;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,5 +21,4 @@ public class Images extends JPanel {
         g.drawImage(image,0,0,this.getWidth(),this.getHeight(),null);
 
     }
-
 }
