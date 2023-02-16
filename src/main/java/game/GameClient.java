@@ -2,6 +2,8 @@ package game;
 import java.io.IOException;
 import java.util.Scanner;
 
+
+
 public class GameClient {
 
     private static final String ANSI_RED = "\u001B[31m";
@@ -10,6 +12,7 @@ public class GameClient {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         Scanner scanMe = new Scanner(System.in);
+
         boolean startGame = true;
 
         while (startGame) {
