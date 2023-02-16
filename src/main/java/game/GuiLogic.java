@@ -1,15 +1,11 @@
 package game;
 
-import ui.GlobalMethodsAndAttributes;
-import ui.UserInterface;
+import gamelogic.GameStory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static ui.GlobalMethodsAndAttributes.*;
-import static ui.GlobalMethodsAndAttributes.ANSI_RESET;
 
 public class GuiLogic extends javax.swing.JFrame {
 
@@ -98,18 +94,18 @@ public class GuiLogic extends javax.swing.JFrame {
 
     public void guiGameStory() {
         newGame.setVisible(false);
-        gameStoryText = new JTextArea("Testing 123");
+        gameStoryText = new JTextArea(GameStory.displayGameInfo());
         scrollPane = new JScrollPane(gameStoryText);
         continueButton = new JButton("Continue");
 
-        img = new ImageIcon("src/main/resources/gui_background_image.jpeg");
+        img = new ImageIcon("");
         backgroundImg = new JLabel(img);
-        backgroundImg.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
+        backgroundImg.setBounds(0, 0, 800, 600);
 
         gameStoryText.setBounds(75, 60, 350, 350);
         gameStoryText.setFont(new Font("Playfair Display", Font.BOLD, 12));
         gameStoryText.setBackground(new Color(0,0,0,65));
-        gameStoryText.setForeground(Color.white);
+        gameStoryText.setForeground(Color.black);
         gameStoryText.setEditable(false);
         gameStoryText.setLineWrap(true);
         gameStoryText.setWrapStyleWord(true);
