@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class GuiLogic extends javax.swing.JFrame {
 
     private static final JFrame frame = new GuiConstructor();
@@ -19,6 +20,8 @@ public class GuiLogic extends javax.swing.JFrame {
     private JButton endTradingDay;
     private JButton buyStock;
     private JButton sellStock;
+    private JButton sleep;
+    private JButton playComputer;
 
     // Game Labels
     private JLabel gameTitle_CAPITAL;
@@ -26,7 +29,10 @@ public class GuiLogic extends javax.swing.JFrame {
     private JLabel gameTitleText;
     private JLabel backgroundImg;
     private JLabel breakingNews;
+    private JLabel roomBackgroundImg;
     private JLabel timeRemaining;
+
+
 
 
     //Game Panels
@@ -35,12 +41,14 @@ public class GuiLogic extends javax.swing.JFrame {
     private JPanel newsTicker;
 
 
+
     //Game Text & Panes
     private JTextArea gameStoryText;
     private JScrollPane scrollPane;
 
     // Game ImageIcons
     private ImageIcon tradingRoomBackground;
+    private ImageIcon bedroomBackground;
     private ImageIcon img;
 
 
@@ -157,6 +165,7 @@ public class GuiLogic extends javax.swing.JFrame {
             sellStock = new JButton();
             timeRemaining = new JLabel(CountdownTimer.getTimeRemaining());
 
+
             //start trading for the day
             CountdownTimer.startTimer(5);
 
@@ -203,7 +212,7 @@ public class GuiLogic extends javax.swing.JFrame {
 
 
             //adding the elements to the frame
-            //frame.setContentPane(backgroundImg);
+            frame.setContentPane(backgroundImg);
             frame.getContentPane().add(welcomeBanner);
             frame.getContentPane().add(tradingTimerPanel);
             frame.getContentPane().add(endTradingDay);
@@ -224,11 +233,57 @@ public class GuiLogic extends javax.swing.JFrame {
         }
 
         public void bedRoom() {
+        //setting the bedroom background
+        bedroomBackground = new ImageIcon("src/main/resources/bedroom.jpg");
+        roomBackgroundImg = new JLabel(bedroomBackground);
+        //setting the buttons for the computer and sleep
+        sleep = new JButton();
+        playComputer = new JButton();
 
 
+        //setting the descriptions for the sleep button
+        sleep.setBounds(570,350,160,50);
+        sleep.setText("Sleep/Next Day?");
+        sleep.setBackground(new Color(0,0,85,125));
+        sleep.setForeground(Color.CYAN);
 
+
+        //setting the descriptions for the playcomputer button
+        playComputer.setBounds(15, 240, 160, 50);
+        playComputer.setText("Play Computer Game?");
+        playComputer.setBackground(new Color(0,0,85,125));
+        playComputer.setForeground(Color.CYAN);
+
+
+        //setting the bounds of the image background
+        roomBackgroundImg.setBounds(0,0,800,600);
+
+
+        //adding to the frame
+        frame.setContentPane(roomBackgroundImg);
+        frame.getContentPane().add(sleep);
+        frame.getContentPane().add(playComputer);
+
+            //commented out for future use
+//        playComputer.addActionListener(new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                frame.getContentPane().removeAll();
+//                frame.repaint();
+//            }
+//        });
+
+
+         sleep.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    frame.getContentPane().removeAll();
+                    frame.repaint();
+                    guiTradingRoom();
+                }
+            });
         }
-
 
     }
 
