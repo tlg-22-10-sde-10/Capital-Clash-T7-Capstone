@@ -1,11 +1,15 @@
 package game;
 
+import ui.GlobalMethodsAndAttributes;
 import ui.UserInterface;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static ui.GlobalMethodsAndAttributes.*;
+import static ui.GlobalMethodsAndAttributes.ANSI_RESET;
 
 public class GuiLogic extends javax.swing.JFrame {
 
@@ -27,7 +31,7 @@ public class GuiLogic extends javax.swing.JFrame {
     // Game Panels
     private JPanel gameStory;
 
-    public GuiLogic(){
+    public GuiLogic() {
         initGui();
         frame.setVisible(true);
     }
@@ -35,7 +39,7 @@ public class GuiLogic extends javax.swing.JFrame {
     //Initializing the GUI, new game and quit buttons
     public void initGui() {
         try {
-            UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,18 +77,28 @@ public class GuiLogic extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String button = e.getActionCommand();
-                if(button.equals("New Game")){
+                if (button.equals("New Game")) {
                     frame.getContentPane().removeAll();
                     frame.repaint();
                     guiGameStory();
                 }
             }
         });
+        //event listener to quit the game
+        quitGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Game intro and story run
+                int exitPrompt = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit Capital Clash?", "Quit Capital Clash?", JOptionPane.YES_NO_OPTION);
+                if (exitPrompt == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
         setVisible(true);
-
     }
 
-    public void guiGameStory(){
+    public void guiGameStory() {
         newGame.setVisible(false);
         gameStory = new JPanel();
 
@@ -93,10 +107,9 @@ public class GuiLogic extends javax.swing.JFrame {
         backgroundImg.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
 
         gameStory.setBounds(130, 130, 350, 350);
-        gameStory.setBackground(new Color(0,0,0,125));
+        gameStory.setBackground(new Color(0, 0, 0, 125));
 
         frame.setContentPane(backgroundImg);
         frame.getContentPane().add(gameStory);
     }
 }
-
