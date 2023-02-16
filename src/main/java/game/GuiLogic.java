@@ -1,6 +1,7 @@
 package game;
 
-import gamelogic.GameStory;
+import guigamelogic.CountdownTimer;
+import guigamelogic.GameStory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,10 +26,12 @@ public class GuiLogic extends javax.swing.JFrame {
     private JLabel gameTitleText;
     private JLabel backgroundImg;
     private JLabel breakingNews;
+    private JLabel timeRemaining;
+
 
     //Game Panels
     private JPanel welcomeBanner;
-    private JPanel tradingTimer;
+    private JPanel tradingTimerPanel;
     private JPanel newsTicker;
 
 
@@ -146,13 +149,18 @@ public class GuiLogic extends javax.swing.JFrame {
             continueButton.setVisible(false);
             //setting the variables and placements
             welcomeBanner = new JPanel();
-            tradingTimer = new JPanel();
+            tradingTimerPanel = new JPanel();
             endTradingDay = new JButton();
             breakingNews = new JLabel();
             newsTicker = new JPanel();
             buyStock = new JButton();
             sellStock = new JButton();
+            timeRemaining = new JLabel(CountdownTimer.getTimeRemaining());
 
+            //start trading for the day
+            CountdownTimer.startTimer(5);
+
+            //changes the background image
             tradingRoomBackground = new ImageIcon("src/main/resources/Trading-Room.jpg");
             backgroundImg = new JLabel(tradingRoomBackground);
 
@@ -163,9 +171,12 @@ public class GuiLogic extends javax.swing.JFrame {
             welcomeBanner.setBounds(0,0, 800, 25);
             welcomeBanner.setBackground(new Color(0, 0, 0, 125));
 
+            //setting the timer descriptions
+
             //setting the trading timer location and color
-            tradingTimer.setBounds(40,40,100,20);
-            tradingTimer.setBackground(Color.YELLOW);
+            tradingTimerPanel.setBounds(40,40,100,20);
+            tradingTimerPanel.setBackground(new Color(0,0,0,125));
+            tradingTimerPanel.add(timeRemaining);
 
             //setting the location end trading day/go to room button
             endTradingDay.setBounds(650, 40,105,40);
@@ -194,12 +205,27 @@ public class GuiLogic extends javax.swing.JFrame {
             //adding the elements to the frame
             //frame.setContentPane(backgroundImg);
             frame.getContentPane().add(welcomeBanner);
-            frame.getContentPane().add(tradingTimer);
+            frame.getContentPane().add(tradingTimerPanel);
             frame.getContentPane().add(endTradingDay);
             frame.getContentPane().add(breakingNews);
             frame.getContentPane().add(newsTicker);
             frame.getContentPane().add(buyStock);
             frame.getContentPane().add(sellStock);
+
+
+            endTradingDay.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    frame.getContentPane().removeAll();
+                    frame.repaint();
+                    bedRoom();
+                }
+            });
+        }
+
+        public void bedRoom() {
+
+
 
         }
 
