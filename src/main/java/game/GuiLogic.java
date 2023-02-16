@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import static ui.GlobalMethodsAndAttributes.*;
 import static ui.GlobalMethodsAndAttributes.ANSI_RESET;
 
-public class GuiLogic extends javax.swing.JFrame {
+public class GuiLogic extends JFrame {
 
     private static final JFrame frame = new GuiConstructor();
 
