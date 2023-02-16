@@ -14,6 +14,7 @@ public class GuiLogic extends javax.swing.JFrame {
     // Game Buttons
     private JButton newGame;
     private JButton quitGame;
+    private JButton continueButton;
 
     // Game Labels
     private JLabel gameTitle_CAPITAL;
@@ -21,11 +22,11 @@ public class GuiLogic extends javax.swing.JFrame {
     private JLabel gameTitleText;
     private JLabel backgroundImg;
 
+    private JTextArea gameStoryText;
+    private JScrollPane scrollPane;
+
     // Game ImageIcons
     private ImageIcon img;
-
-    // Game Panels
-    private JPanel gameStory;
 
     public GuiLogic(){
         initGui();
@@ -68,35 +69,57 @@ public class GuiLogic extends javax.swing.JFrame {
         frame.getContentPane().add(gameTitle_CLASH);
         frame.getContentPane().add(gameTitleText);
 
-        // Button Event Listeners
+        // New Game Button Event Listener
         newGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String button = e.getActionCommand();
-                if(button.equals("New Game")){
-                    frame.getContentPane().removeAll();
-                    frame.repaint();
-                    guiGameStory();
-                }
+                frame.getContentPane().removeAll();
+                frame.repaint();
+                guiGameStory();
             }
         });
-        setVisible(true);
-
     }
 
     public void guiGameStory(){
         newGame.setVisible(false);
-        gameStory = new JPanel();
+        gameStoryText = new JTextArea("Testing 123");
+        scrollPane = new JScrollPane(gameStoryText);
+        continueButton = new JButton("Continue");
 
-        img = new ImageIcon("src/main/resources/Wall-street.jpg");
+        img = new ImageIcon("src/main/resources/gui_background_image.jpeg");
         backgroundImg = new JLabel(img);
         backgroundImg.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
 
-        gameStory.setBounds(130, 130, 350, 350);
-        gameStory.setBackground(new Color(0,0,0,125));
+        gameStoryText.setBounds(75, 60, 350, 350);
+        gameStoryText.setFont(new Font("Playfair Display", Font.BOLD, 12));
+        gameStoryText.setBackground(new Color(0,0,0,65));
+        gameStoryText.setForeground(Color.white);
+        gameStoryText.setEditable(false);
+        gameStoryText.setLineWrap(true);
+        gameStoryText.setWrapStyleWord(true);
+
+        scrollPane.getViewport().setOpaque(false);
+
+        continueButton.setBounds(130, 420, 105, 40);
+        continueButton.setBackground(Color.GREEN);
 
         frame.setContentPane(backgroundImg);
-        frame.getContentPane().add(gameStory);
+        frame.getContentPane().add(gameStoryText);
+        frame.getContentPane().add(continueButton);
+
+        // Continue Game Button Event Listener
+        continueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                frame.repaint();
+                guiTradingRoom();
+            }
+        });
+    }
+
+    public void guiTradingRoom(){
+        continueButton.setVisible(false);
     }
 }
 
