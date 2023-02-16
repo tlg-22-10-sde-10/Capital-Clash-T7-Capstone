@@ -1,7 +1,4 @@
-package gamelogic;
-
-import static ui.GlobalMethodsAndAttributes.*;
-import static ui.GlobalMethodsAndAttributes.ANSI_RESET;
+package guigamelogic;
 
 public class GameStory {
     public static String displayGameInfo() {
