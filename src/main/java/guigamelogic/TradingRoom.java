@@ -1,7 +1,6 @@
-package gamelogic;
+package guigamelogic;
 
 import stock.Stock;
-import ui.GlobalMethodsAndAttributes;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
