@@ -1,4 +1,4 @@
-package gamelogic;
+package guigamelogic;
 
 import javax.swing.*;
 import java.util.ArrayList;
