@@ -14,7 +14,7 @@ public class GuiConstructor extends JFrame {
        setVisible(true);
        setResizable(false);
 
-       Images backgroundImage = new Images("src/main/resources/stockimage.png");
+       Images backgroundImage = new Images("stockimage.png");
        backgroundImage.setBounds(0,0,this.getWidth(),this.getHeight());
        setContentPane(backgroundImage);
    }

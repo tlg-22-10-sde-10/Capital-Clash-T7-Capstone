@@ -1,6 +1,7 @@
 package guigamelogic;
 
 import stock.Stock;
+import ui.GlobalMethodsAndAttributes;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
@@ -90,6 +91,24 @@ public class TradingRoom {
         }
 
     }
+
+
+    public static JTextArea showStockInventory(JTextArea buyMenuTextArea) {
+        //ui.titleBarForInventory(day);
+
+//        if (inventory == null){
+//                return null;
+//        }
+
+
+        for (Stock stock : inventory.getAllStocks()) {
+            buyMenuTextArea.append(stock.toString() + "\n");
+        }
+        return buyMenuTextArea;
+    }
+
+
+
 
 
 }
