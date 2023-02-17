@@ -33,26 +33,32 @@ public class GuiLogic extends javax.swing.JFrame {
     private JLabel gameTitle_CLASH;
     private JLabel gameTitleText;
     private JLabel backgroundImg;
+    private JLabel buyMenuBackgroundImg;
     private JLabel breakingNews;
     private JLabel roomBackgroundImg;
     private JLabel timeRemaining;
 
+    private JLabel stockPurchaseHeading;
+    private JLabel stockPurchaseQuantityHeading;
 
     //Game Panels
     private JPanel welcomeBanner;
     private JPanel tradingTimerPanel;
     private JPanel newsTicker;
     private JPanel buyMenuStocksPanel;
-    private JPanel buyMenuStocksButtonPanel;
+
 
     //Game Text & Panes
     private JTextArea gameStoryText;
     private JScrollPane scrollPane;
     private JTextArea buyMenuStocksListing;
+    private JTextField stockBuySymbol;
+    private JTextField stockBuyQuantity;
 
     // Game ImageIcons
     private ImageIcon tradingRoomBackground;
     private ImageIcon bedroomBackground;
+    private ImageIcon buyMenuBackground;
     private ImageIcon img;
 
     //Game JFrames
@@ -325,23 +331,32 @@ public class GuiLogic extends javax.swing.JFrame {
 
 
     public void buyMenuCreator() {
-        //
+        //Getting the J things
         buyMenuStocksListing = new JTextArea();
         buyMenuStocksPanel = new JPanel();
         buyMenuPopup = new JFrame();
         submitBuyStockMenuButton = new JButton("Submit");
         cancelBuyStockMenuButton = new JButton("Cancel");
-        buyMenuStocksButtonPanel = new JPanel();
+        stockBuySymbol = new JTextField();
+        stockBuyQuantity = new JTextField();
+        stockPurchaseHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
+        stockPurchaseQuantityHeading = new JLabel("How many shares would you like? Integers only");
 
+        //adding the background
+        buyMenuBackground = new ImageIcon("");
+        buyMenuBackgroundImg = new JLabel(buyMenuBackground);
+
+        //setting the background dimensions
+        //setting the background picture and location
+        buyMenuBackgroundImg.setBounds(0, 0, 800, 600);
 
         //Setting the frame to popup
         buyMenuPopup.setVisible(true);
         buyMenuPopup.setTitle("Buy Stock");
-        buyMenuPopup.setSize(600, 400);
+        buyMenuPopup.setSize(600, 500);
         buyMenuPopup.setLocationRelativeTo(null);
         buyMenuPopup.setResizable(false);
-        buyMenuPopup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        buyMenuPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //setting buymenu stock listing location
         buyMenuStocksPanel.setSize(600,200);
@@ -349,21 +364,45 @@ public class GuiLogic extends javax.swing.JFrame {
         buyMenuStocksPanel.add(TradingRoom.showStockInventory(buyMenuStocksListing));
 
         //setting the submit button location
-        submitBuyStockMenuButton.setBounds(300,300,10,10);
+        submitBuyStockMenuButton.setBounds(115,400,100,50);
+        submitBuyStockMenuButton.setBackground(Color.GREEN);
 
         //setting the cancel button location
-        //cancelBuyStockMenuButton.setBounds(300,300,25,25);
+        cancelBuyStockMenuButton.setBounds(365,400,100,50);
+        cancelBuyStockMenuButton.setBackground(Color.ORANGE);
 
-//        //setting buymenu button holder panel
-//        buyMenuStocksButtonPanel.setBounds(500,500,500,500);
-//        buyMenuStocksButtonPanel.setSize(100,100);
-//        buyMenuStocksButtonPanel.add(submitBuyStockMenuButton);
+        //setting the stock symbol text field
+        stockBuySymbol.setBounds(240,250,100,25);
 
+        //setting the heading for the stock name heading
+        stockPurchaseHeading.setBounds(120,220,400,25);
 
+        //setting the stock quantity text field
+        stockBuyQuantity.setBounds(240, 320, 100, 25);
+
+        //setting the heading for the stock quantity field/heading
+        stockPurchaseQuantityHeading.setBounds(140,290,400,25);
+
+        //adding to the content pane
+        buyMenuPopup.setContentPane(buyMenuBackgroundImg);
         buyMenuPopup.getContentPane().add(buyMenuStocksPanel);
         buyMenuPopup.getContentPane().add(submitBuyStockMenuButton);
+        buyMenuPopup.getContentPane().add(cancelBuyStockMenuButton);
+        buyMenuPopup.getContentPane().add(stockBuySymbol);
+        buyMenuPopup.getContentPane().add(stockBuyQuantity);
+        buyMenuPopup.getContentPane().add(stockPurchaseHeading);
+        buyMenuPopup.getContentPane().add(stockPurchaseQuantityHeading);
 
-        //buyMenuPopup.getContentPane().add(cancelBuyStockMenuButton);
+        cancelBuyStockMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buyMenuPopup.dispose();
+            }
+        });
+
+
+
+
 
 
     }
