@@ -52,7 +52,7 @@ public class TradingRoom {
         showTradingRoomDashboard(day,textArea);
     }
 
-    private static String promptForValidStockSymbol(int day, JTextArea textArea, String stocksymbol){
+    public static String promptForValidStockSymbol(int day, JTextArea textArea, String stocksymbol){
         textArea.append("\nPlease Enter the symbol of the stock you want to purchase: \n");
         return stocksymbol;
     }
