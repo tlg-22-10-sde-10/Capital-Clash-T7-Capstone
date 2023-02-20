@@ -3,16 +3,24 @@ package guigamelogic;
 import stock.Stock;
 import ui.GlobalMethodsAndAttributes;
 
-import static ui.GlobalMethodsAndAttributes.*;
-
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static ui.GlobalMethodsAndAttributes.*;
 
 public class TradingRoom {
 
+
+
+
     public static void menuOneBuy(int day, String stockSymbol, int numberOfStockPurchased, JTextArea textArea) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+
+
+       GlobalMethodsAndAttributes.initializeGlobalInstances();
+
         if(!isValidStockSymbol(stockSymbol)){
             showInvalidStockSymbolMessage(day,textArea);
             stockSymbol = promptForValidStockSymbol(day,textArea,stockSymbol);
