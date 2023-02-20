@@ -454,6 +454,7 @@ public class GuiLogic extends javax.swing.JFrame {
         cancelSellStockMenuButton.setBounds(365,400,100,50);
         cancelSellStockMenuButton.setBackground(Color.ORANGE);
 
+
         //setting the stock symbol text field
         //stockBuySymbol.setBounds(240,250,100,25);
 
