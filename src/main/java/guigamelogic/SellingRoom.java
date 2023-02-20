@@ -16,7 +16,7 @@ public class SellingRoom {
 
         if (playerStockMap.isEmpty()) {
             JOptionPane.showMessageDialog(null, "***No Current Holdings. Transaction cannot be completed***"
-                    , "Error", JOptionPane.ERROR);
+                    , "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             ArrayList<String> playerStockList = new ArrayList<>(playerStockMap.keySet());
             showHoldings(playerStockList);
