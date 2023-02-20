@@ -14,6 +14,7 @@ public class CountdownTimer {
     }
 
     public static String getTimeRemaining() {
+        CountdownTimer.startTimer(5);
         long remainingTime = endTime - System.currentTimeMillis();
         long minutesRemaining = TimeUnit.MILLISECONDS.toMinutes(remainingTime);
         long secondsRemaining = TimeUnit.MILLISECONDS.toSeconds(remainingTime) - TimeUnit.MINUTES.toSeconds(minutesRemaining);
