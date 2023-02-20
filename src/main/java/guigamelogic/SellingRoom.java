@@ -40,6 +40,7 @@ public class SellingRoom {
                     double pricePerShare = inventory.findBySymbol(stockSymbol).getCurrentPrice();
                     double totalSalesPrice = quantity * pricePerShare;
                     player.getAccount().calculateBalance(totalSalesPrice);
+
                     int newQuantity  = currentQuantity - quantity;
                     if (newQuantity == 0) {
                         playerStockMap.remove(stockSymbol);
