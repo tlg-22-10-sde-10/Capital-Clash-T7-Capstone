@@ -47,6 +47,8 @@ public class GuiLogic extends javax.swing.JFrame {
 
     private JLabel stockPurchaseHeading;
     private JLabel stockPurchaseQuantityHeading;
+    private JLabel stockSellHeading;
+    private JLabel stockSellQuantityHeading;
 
     //Game Panels
     private JPanel welcomeBanner;
@@ -58,11 +60,14 @@ public class GuiLogic extends javax.swing.JFrame {
     //Game Text & Panes
     private JTextArea gameStoryText;
     private JTextArea insufficientBuyBalance;
+    private JTextArea insufficientSellBalance;
     private JScrollPane scrollPane;
     private JTextArea buyMenuStocksListing;
     private JTextArea sellMenuStocksListing;
     private JTextField stockBuySymbol;
     private JTextField stockBuyQuantity;
+    private JTextField stockSellSymbol;
+    private JTextField stockSellQuantity;
 
     // Game ImageIcons
     private ImageIcon tradingRoomBackground;
@@ -425,10 +430,10 @@ public class GuiLogic extends javax.swing.JFrame {
         sellMenuPopup = new JFrame();
         submitSellStockMenuButton = new JButton("Submit");
         cancelSellStockMenuButton = new JButton("Cancel");
-//            stockBuySymbol = new JTextField();
-//            stockBuyQuantity = new JTextField();
-//            stockPurchaseHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
-//            stockPurchaseQuantityHeading = new JLabel("How many shares would you like? Integers only");
+        stockSellSymbol = new JTextField();
+        stockSellQuantity = new JTextField();
+        stockSellHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
+        stockSellQuantityHeading = new JLabel("How many shares would you like? Integers only");
 
         //adding the background
         sellMenuBackground = new ImageIcon("");
@@ -449,7 +454,7 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting sell menu stock listing location
         sellMenuStocksPanel.setSize(600,200);
         sellMenuStocksListing.setEditable(false);
-        sellMenuStocksPanel.add(SellingRoom.menuTwoSell());
+        //sellMenuStocksPanel.add(SellingRoom.menuTwoSell());
 
         //setting the submit button location
         submitSellStockMenuButton.setBounds(115,400,100,50);
@@ -477,10 +482,10 @@ public class GuiLogic extends javax.swing.JFrame {
         sellMenuPopup.getContentPane().add(sellMenuStocksPanel);
         sellMenuPopup.getContentPane().add(submitSellStockMenuButton);
         sellMenuPopup.getContentPane().add(cancelSellStockMenuButton);
-        //sellMenuPopup.getContentPane().add(stockBuySymbol);
-        //sellMenuPopup.getContentPane().add(stockBuyQuantity);
-        //sellMenuPopup.getContentPane().add(stockPurchaseHeading);
-        //sellMenuPopup.getContentPane().add(stockPurchaseQuantityHeading);
+        sellMenuPopup.getContentPane().add(stockSellSymbol);
+        sellMenuPopup.getContentPane().add(stockSellQuantity);
+        sellMenuPopup.getContentPane().add(stockSellHeading);
+        sellMenuPopup.getContentPane().add(stockSellQuantityHeading);
 
         cancelSellStockMenuButton.addActionListener(new ActionListener() {
             @Override
@@ -490,20 +495,15 @@ public class GuiLogic extends javax.swing.JFrame {
         });
 
 
-        submitBuyStockMenuButton.addActionListener(new ActionListener() {
+        submitSellStockMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String stockBought = stockBuySymbol.getText();
-                Integer stockQuant = Integer.parseInt(stockBuyQuantity.getText());
+                String stockSold = stockSellSymbol.getText();
+                String stockQuantity = stockSellQuantity.getText();
 
                 try {
-                    TradingRoom.menuOneBuy(2, stockBought, stockQuant, insufficientBuyBalance);
-                    JOptionPane.showMessageDialog(null,insufficientBuyBalance);
-                    buyMenuPopup.dispose();
-                } catch (UnsupportedAudioFileException ex) {
-                    throw new RuntimeException(ex);
-                } catch (LineUnavailableException ex) {
-                    throw new RuntimeException(ex);
+                    SellingRoom.menuTwoSell(stockSold, stockQuantity);
+                    sellMenuPopup.dispose();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
