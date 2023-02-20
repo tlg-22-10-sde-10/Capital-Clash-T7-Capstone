@@ -14,46 +14,49 @@ public class SellingRoom {
 
         GlobalMethodsAndAttributes.initializeGlobalInstances();
 
-//        if (playerStockMap.isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "***No Current Holdings. Transaction cannot be completed***"
-//                    , "Error", JOptionPane.ERROR_MESSAGE);
-//        } else {
-            ArrayList<String> playerStockList = new ArrayList<>(playerStockMap.keySet());
-            showHoldings(playerStockList);
-
-            if (!playerStockMap.containsKey(stockSymbol)) {
-                JOptionPane.showMessageDialog(null, "**This Stock not you holdings***\n***Please try again"
-                        , "Error", JOptionPane.ERROR_MESSAGE);
+        if (playerStockMap.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "***No Current Holdings. Transaction cannot be completed***"
+                    , "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+                ArrayList<String> playerStockList = new ArrayList<>(playerStockMap.keySet());
                 showHoldings(playerStockList);
-                return;
-            }
 
-            if (!isPositiveInteger(quantityInput)) {
-                JOptionPane.showMessageDialog(null, "***Your input is not an integer. Please try again.***\nFractional Shares not allowed"
-                        , "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            int quantity = Integer.parseInt(quantityInput);
-
-            if (playerStockMap.get(stockSymbol) >= quantity) {
-                player.getAccount().calculateBalance(quantity * inventory.findBySymbol(stockSymbol).getCurrentPrice());
-
-                playerStockMap.put(stockSymbol, playerStockMap.get(stockSymbol) - quantity);
-
-                if (playerStockMap.get(stockSymbol) == 0) {
-                    playerStockMap.remove(stockSymbol);
+                if (!playerStockMap.containsKey(stockSymbol)) {
+                    JOptionPane.showMessageDialog(null, "**This Stock not you holdings***\n***Please try again"
+                            , "Error", JOptionPane.ERROR_MESSAGE);
+                    showHoldings(playerStockList);
+                    return;
                 }
 
-                JOptionPane.showMessageDialog(null, "***Sucessfully Sold " + quantityInput + " shares of " +
-                        inventory.findBySymbol(stockSymbol).getStockName() + "***", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "***Please Try again and enter a valid stock quantity.***", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+                if (!isPositiveInteger(quantityInput)) {
+                    JOptionPane.showMessageDialog(null, "***Your input is not an integer. Please try again.***\nFractional Shares not allowed"
+                            , "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                int quantity = Integer.parseInt(quantityInput);
+                int currentQuantity = playerStockMap.get(stockSymbol);
+                if ( currentQuantity >= quantity) {
+                    double pricePerShare = inventory.findBySymbol(stockSymbol).getCurrentPrice();
+                    double totalSalesPrice = quantity * pricePerShare;
+                    player.getAccount().calculateBalance(totalSalesPrice);
+                    int newQuantity  = currentQuantity - quantity;
+                    if (newQuantity == 0) {
+                        playerStockMap.remove(stockSymbol);
+                    }
+                    else {
+                        playerStockMap.put(stockSymbol,newQuantity);
+                    }
+
+                    JOptionPane.showMessageDialog(null, "***Sucessfully Sold " + quantityInput + " shares of " +
+                            inventory.findBySymbol(stockSymbol).getStockName() + "***", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "***Please Try again and enter a valid stock quantity.***", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
 
 
-        //}
+        }
 
 
     }
