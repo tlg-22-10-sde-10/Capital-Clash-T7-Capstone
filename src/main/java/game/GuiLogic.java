@@ -66,7 +66,6 @@ public class GuiLogic extends javax.swing.JFrame {
     private JTextArea gameStoryText;
     private JTextArea playerStockHoldingsTextArea;
     private JTextArea insufficientBuyBalance;
-    private JTextArea insufficientSellBalance;
     private JScrollPane scrollPane;
     private JTextArea buyMenuStocksListing;
     private JTextArea sellMenuStocksListing;
@@ -97,7 +96,6 @@ public class GuiLogic extends javax.swing.JFrame {
 
     //Game Day Counter
     public static int dayCounter = 1;
-
 
     public GuiLogic() {
         initGui();
@@ -277,6 +275,7 @@ public class GuiLogic extends javax.swing.JFrame {
         newsTicker.setBounds(100, 140, 600, 40);
         newsTicker.setBackground(new Color(0, 0, 0, 125));
 
+
         //setting the location and description of the buystock button
         buyStock.setBounds(170, 375, 105, 40);
         buyStock.setText("Buy Stock");
@@ -407,7 +406,7 @@ public class GuiLogic extends javax.swing.JFrame {
         stockBuySymbol = new JTextField();
         stockBuyQuantity = new JTextField();
         stockPurchaseHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
-        stockPurchaseQuantityHeading = new JLabel("How many shares would you like? Integers only");
+        stockPurchaseQuantityHeading = new JLabel("How many shares would you like? (Integers only): ");
         insufficientBuyBalance = new JTextArea();
 
         //adding the background
@@ -449,7 +448,7 @@ public class GuiLogic extends javax.swing.JFrame {
         stockBuyQuantity.setBounds(240, 320, 100, 25);
 
         //setting the heading for the stock quantity field/heading
-        stockPurchaseQuantityHeading.setBounds(140, 290, 400, 25);
+        stockPurchaseQuantityHeading.setBounds(140, 290, 700, 25);
 
         //adding to the content pane
         buyMenuPopup.setContentPane(buyMenuBackgroundImg);
@@ -503,8 +502,8 @@ public class GuiLogic extends javax.swing.JFrame {
         cancelSellStockMenuButton = new JButton("Cancel");
         stockSellSymbol = new JTextField();
         stockSellQuantity = new JTextField();
-        stockSellHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
-        stockSellQuantityHeading = new JLabel("How many shares would you like? Integers only");
+        stockSellHeading = new JLabel("Please enter the symbol of the stock you want to sell: ");
+        stockSellQuantityHeading = new JLabel("               Please enter the quantity: ");
 
         //adding the background
         sellMenuBackground = new ImageIcon("");
@@ -525,7 +524,7 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting sell menu stock listing location
         sellMenuStocksPanel.setSize(600,200);
         sellMenuStocksListing.setEditable(false);
-        //sellMenuStocksPanel.add(SellingRoom.menuTwoSell());
+        sellMenuStocksPanel.add(SellingRoom.showPlayerHoldings(sellMenuStocksListing));
 
         //setting the submit button location
         submitSellStockMenuButton.setBounds(115,400,100,50);
@@ -535,18 +534,17 @@ public class GuiLogic extends javax.swing.JFrame {
         cancelSellStockMenuButton.setBounds(365,400,100,50);
         cancelSellStockMenuButton.setBackground(Color.ORANGE);
 
-
         //setting the stock symbol text field
-        //stockBuySymbol.setBounds(240,250,100,25);
+        stockSellSymbol.setBounds(240,250,100,25);
 
         //setting the heading for the stock name heading
-        //stockPurchaseHeading.setBounds(120,220,400,25);
+        stockSellHeading.setBounds(120,220,400,25);
 
         //setting the stock quantity text field
-        //stockBuyQuantity.setBounds(240, 320, 100, 25);
+        stockSellQuantity.setBounds(240, 320, 100, 25);
 
         //setting the heading for the stock quantity field/heading
-        //stockPurchaseQuantityHeading.setBounds(140,290,400,25);
+        stockSellQuantityHeading.setBounds(140,290,400,25);
 
         //adding to the content pane
         sellMenuPopup.setContentPane(sellMenuBackgroundImg);
