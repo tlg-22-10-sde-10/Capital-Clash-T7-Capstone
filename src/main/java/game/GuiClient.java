@@ -6,7 +6,7 @@ public class GuiClient implements Runnable {
     @Override
     public void run() {
        GuiLogic guiLogic = new GuiLogic();
-       guiLogic.initGui();
+
     }
 
 
