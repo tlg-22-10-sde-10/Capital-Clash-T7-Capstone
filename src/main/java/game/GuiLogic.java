@@ -419,6 +419,28 @@ public class GuiLogic extends javax.swing.JFrame {
             }
         });
 
+        submitBuyStockMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String stockBought = stockBuySymbol.getText();
+                Integer stockQuant = Integer.parseInt(stockBuyQuantity.getText());
+
+                try {
+                    TradingRoom.menuOneBuy(0, stockBought, stockQuant, insufficientBuyBalance);
+                    JOptionPane.showMessageDialog(null,insufficientBuyBalance);
+                    buyMenuPopup.dispose();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        });
+
+
 
     }
 
@@ -495,6 +517,7 @@ public class GuiLogic extends javax.swing.JFrame {
         });
 
 
+
         submitSellStockMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -510,8 +533,6 @@ public class GuiLogic extends javax.swing.JFrame {
 
             }
         });
-
-
 
     }
 
