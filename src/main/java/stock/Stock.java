@@ -83,7 +83,7 @@ public class Stock {
     }
 
     public String toString() {
-        String result = String.format("%-10s %-20s %-15s %-18s  %-11s","",
+        String result = String.format("%-10s %-20s %-15s %-18s %-11s","",
                 getStockName(), getSymbol(), getCurrentPrice(), getSector());
         return result;
     }

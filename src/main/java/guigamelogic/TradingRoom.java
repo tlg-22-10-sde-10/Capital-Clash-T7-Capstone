@@ -108,7 +108,7 @@ public class TradingRoom {
         buyMenuTextArea.append(buyOptionTitles);
 
         for (Stock stock : inventory.getAllStocks()) {
-            buyMenuTextArea.append(stock.toString() + "     \n");
+            buyMenuTextArea.append(stock.toString() + "\n");
         }
         return buyMenuTextArea;
     }

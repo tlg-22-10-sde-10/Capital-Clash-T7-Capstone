@@ -242,7 +242,7 @@ public class GuiLogic extends javax.swing.JFrame {
         newsTicker.setBounds(100, 140, 600, 40);
         newsTicker.setBackground(new Color(0, 0, 0, 125));
 
-        //setting the location and description of the buystock button
+        //setting the location and description of the buy stock button
         buyStock.setBounds(170, 415, 105, 40);
         buyStock.setText("Buy Stock");
         buyStock.setBackground(Color.GREEN);
@@ -356,7 +356,7 @@ public class GuiLogic extends javax.swing.JFrame {
         stockBuySymbol = new JTextField();
         stockBuyQuantity = new JTextField();
         stockPurchaseHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
-        stockPurchaseQuantityHeading = new JLabel("How many shares would you like? (Integers ONLY)");
+        stockPurchaseQuantityHeading = new JLabel("How many shares would you like? (Integers only): ");
         insufficientBuyBalance = new JTextArea();
 
         //adding the background
@@ -398,7 +398,7 @@ public class GuiLogic extends javax.swing.JFrame {
         stockBuyQuantity.setBounds(240, 320, 100, 25);
 
         //setting the heading for the stock quantity field/heading
-        stockPurchaseQuantityHeading.setBounds(140, 290, 400, 25);
+        stockPurchaseQuantityHeading.setBounds(140, 290, 700, 25);
 
         //adding to the content pane
         buyMenuPopup.setContentPane(buyMenuBackgroundImg);
