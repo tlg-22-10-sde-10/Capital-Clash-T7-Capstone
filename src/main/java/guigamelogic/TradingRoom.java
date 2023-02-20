@@ -102,15 +102,13 @@ public class TradingRoom {
 
 
     public static JTextArea showStockInventory(JTextArea buyMenuTextArea) {
-        //ui.titleBarForInventory(day);
 
-//        if (inventory == null){
-//                return null;
-//        }
+        String buyOptionTitles = "\n           Stock Name:       " + "  Stock Symbol:       " + "Current Price:       " + "Sector:\n";
 
+        buyMenuTextArea.append(buyOptionTitles);
 
         for (Stock stock : inventory.getAllStocks()) {
-            buyMenuTextArea.append(stock.toString() + "\n");
+            buyMenuTextArea.append(stock.toString() + "     \n");
         }
         return buyMenuTextArea;
     }

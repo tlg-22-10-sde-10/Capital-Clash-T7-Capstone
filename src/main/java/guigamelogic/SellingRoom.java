@@ -16,15 +16,15 @@ public class SellingRoom {
 
         if (playerStockMap.isEmpty()) {
             JOptionPane.showMessageDialog(null, "***No Current Holdings. Transaction cannot be completed***"
-                    , "Error", JOptionPane.ERROR);
+                    , "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             ArrayList<String> playerStockList = new ArrayList<>(playerStockMap.keySet());
-            showHoldings(playerStockList);
+           // showHoldings(playerStockList);
 
             if (!playerStockMap.containsKey(stockSymbol)) {
                 JOptionPane.showMessageDialog(null, "**This Stock not you holdings***\n***Please try again"
                         , "Error", JOptionPane.ERROR_MESSAGE);
-                showHoldings(playerStockList);
+               // showHoldings(playerStockList);
                 return;
             }
 
@@ -45,7 +45,7 @@ public class SellingRoom {
                     playerStockMap.remove(stockSymbol);
                 }
 
-                JOptionPane.showMessageDialog(null, "***Sucessfully Sold " + quantityInput + " shares of " +
+                JOptionPane.showMessageDialog(null, "***Successfully Sold " + quantityInput + " shares of " +
                         inventory.findBySymbol(stockSymbol).getStockName() + "***", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "***Please Try again and enter a valid stock quantity.***", "Error",
@@ -56,6 +56,21 @@ public class SellingRoom {
         }
 
 
+    }
+
+    public static JTextArea showPlayerHoldings(JTextArea sellMenuTextArea) {
+
+        String sellPageTitle = "       YOUR HOLDINGS\n      ";
+        String sellOptionTitles = "\nStock Symbol:       " + "Quantity:\n";
+
+        sellMenuTextArea.append(sellPageTitle);
+        sellMenuTextArea.append(sellOptionTitles);
+
+        for (String playerStock : playerStocks) {
+            sellMenuTextArea.append(playerStock + "                   " +
+                    playerStockMap.get(playerStock));
+        }
+        return sellMenuTextArea;
     }
 
 
