@@ -6,11 +6,14 @@ import guigamelogic.SellingRoom;
 import guigamelogic.TradingRoom;
 import ui.GlobalMethodsAndAttributes;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class GuiLogic extends javax.swing.JFrame {
@@ -54,6 +57,7 @@ public class GuiLogic extends javax.swing.JFrame {
 
     //Game Text & Panes
     private JTextArea gameStoryText;
+    private JTextArea insufficientBuyBalance;
     private JScrollPane scrollPane;
     private JTextArea buyMenuStocksListing;
     private JTextArea sellMenuStocksListing;
@@ -350,6 +354,7 @@ public class GuiLogic extends javax.swing.JFrame {
         stockBuyQuantity = new JTextField();
         stockPurchaseHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
         stockPurchaseQuantityHeading = new JLabel("How many shares would you like? Integers only");
+        insufficientBuyBalance = new JTextArea();
 
         //adding the background
         buyMenuBackground = new ImageIcon("");
@@ -481,6 +486,28 @@ public class GuiLogic extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sellMenuPopup.dispose();
+            }
+        });
+
+
+        submitBuyStockMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String stockBought = stockBuySymbol.getText();
+                Integer stockQuant = Integer.parseInt(stockBuyQuantity.getText());
+
+                try {
+                    TradingRoom.menuOneBuy(2, stockBought, stockQuant, insufficientBuyBalance);
+                    JOptionPane.showMessageDialog(null,insufficientBuyBalance);
+                    buyMenuPopup.dispose();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             }
         });
 

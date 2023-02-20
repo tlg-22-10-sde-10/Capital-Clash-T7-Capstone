@@ -1,13 +1,18 @@
 package guigamelogic;
 
+import ui.GlobalMethodsAndAttributes;
+
 import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
 public class SellingRoom {
 
-    public static void menuTwoSell(String stockSymbol, String quantityInput) {
+    public static void menuTwoSell(String stockSymbol, String quantityInput) throws FileNotFoundException {
+
+        GlobalMethodsAndAttributes.initializeGlobalInstances();
 
         if (playerStockMap.isEmpty()) {
             JOptionPane.showMessageDialog(null, "***No Current Holdings. Transaction cannot be completed***"
