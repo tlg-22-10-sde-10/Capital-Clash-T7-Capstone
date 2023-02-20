@@ -9,11 +9,14 @@ import ui.GlobalMethodsAndAttributes;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static ui.GlobalMethodsAndAttributes.*;
 
 
 public class GuiLogic extends javax.swing.JFrame {
@@ -51,16 +54,18 @@ public class GuiLogic extends javax.swing.JFrame {
     private JLabel stockSellQuantityHeading;
 
     //Game Panels
-    private JPanel welcomeBanner;
+    private JPanel welcomeBannerPanel;
     private JPanel tradingTimerPanel;
     private JPanel newsTicker;
     private JPanel buyMenuStocksPanel;
     private JPanel sellMenuStocksPanel;
+    private JPanel brotherStockHoldings;
+    private JPanel playerStockHoldingsPanel;
 
     //Game Text & Panes
     private JTextArea gameStoryText;
+    private JTextArea playerStockHoldingsTextArea;
     private JTextArea insufficientBuyBalance;
-    private JTextArea insufficientSellBalance;
     private JScrollPane scrollPane;
     private JTextArea buyMenuStocksListing;
     private JTextArea sellMenuStocksListing;
@@ -68,6 +73,7 @@ public class GuiLogic extends javax.swing.JFrame {
     private JTextField stockBuyQuantity;
     private JTextField stockSellSymbol;
     private JTextField stockSellQuantity;
+    private JLabel welcomeBannerPanelLabel;
 
     // Game ImageIcons
     private ImageIcon tradingRoomBackground;
@@ -80,14 +86,23 @@ public class GuiLogic extends javax.swing.JFrame {
     private JFrame buyMenuPopup;
     private JFrame sellMenuPopup;
 
+    public static int getDayCounter() {
+        return dayCounter;
+    }
+
+    public static void setDayCounter(int dayCounter) {
+        GuiLogic.dayCounter = dayCounter;
+    }
+
     //Game Day Counter
     public static int dayCounter = 1;
-
 
     public GuiLogic() {
         initGui();
         frame.setVisible(true);
     }
+
+
 
     //Initializing the GUI, new game and quit buttons
     public void initGui() {
@@ -198,19 +213,25 @@ public class GuiLogic extends javax.swing.JFrame {
     }
 
     public void guiTradingRoom() {
+
         continueButton.setVisible(false);
         //setting the variables and placements
-        welcomeBanner = new JPanel();
+        welcomeBannerPanel = new JPanel();
+        welcomeBannerPanelLabel = new JLabel();
         tradingTimerPanel = new JPanel();
         endTradingDay = new JButton();
         breakingNews = new JLabel();
         newsTicker = new JPanel();
         buyStock = new JButton();
         sellStock = new JButton();
+        brotherStockHoldings = new JPanel();
+        playerStockHoldingsPanel = new JPanel();
+        playerStockHoldingsTextArea = new JTextArea();
         timeRemaining = new JLabel(CountdownTimer.getTimeRemaining());
 
 
         //start trading for the day
+        //Executor to call method constantly? For time remaining portion
         CountdownTimer.startTimer(5);
 
         //changes the background image
@@ -220,16 +241,26 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting the background picture and location
         backgroundImg.setBounds(0, 0, 800, 600);
 
-        //setting the welcome banner location and color
-        welcomeBanner.setBounds(0, 0, 800, 25);
-        welcomeBanner.setBackground(new Color(0, 0, 0, 125));
+        //setting the text to go into the welcome banner
+        welcomeBannerPanelLabel.setText(" Welcome to Trading Day: " + dayCounter);
+        welcomeBannerPanelLabel.setForeground(Color.BLUE);
+        welcomeBannerPanelLabel.setBounds(315, 0,800,20);
 
-        //setting the timer descriptions
+        //setting the welcome banner location and color
+        welcomeBannerPanel.setBounds(0, 0, 800, 25);
+        welcomeBannerPanel.setBackground(new Color(0, 0, 0, 125));
+        welcomeBannerPanel.setBorder(new LineBorder(Color.BLUE));
+
 
         //setting the trading timer location and color
         tradingTimerPanel.setBounds(40, 40, 100, 20);
         tradingTimerPanel.setBackground(new Color(0, 0, 0, 125));
         tradingTimerPanel.add(timeRemaining);
+
+
+        //setting time remaining location
+        timeRemaining.setBounds(40,40,100,100);
+        timeRemaining.setBackground(Color.GREEN);
 
         //setting the location end trading day/go to room button
         endTradingDay.setBounds(650, 40, 105, 40);
@@ -244,26 +275,42 @@ public class GuiLogic extends javax.swing.JFrame {
         newsTicker.setBounds(100, 140, 600, 40);
         newsTicker.setBackground(new Color(0, 0, 0, 125));
 
+
         //setting the location and description of the buystock button
-        buyStock.setBounds(170, 415, 105, 40);
+        buyStock.setBounds(170, 375, 105, 40);
         buyStock.setText("Buy Stock");
         buyStock.setBackground(Color.GREEN);
 
         //setting the location and description of the sell button
-        sellStock.setBounds(510, 415, 105, 40);
+        sellStock.setBounds(510, 375, 105, 40);
         sellStock.setText("Sell Stock");
         sellStock.setBackground(Color.ORANGE);
 
+        //setting the location of the player's stock holdings panel
+        playerStockHoldingsPanel.setBounds(80,440, 300,100);
+        playerStockHoldingsPanel.setBackground(new Color(0, 0, 0, 125));
+        //Doesn't work below TODO
+        playerStockHoldingsPanel.add(TradingRoom.playerVsBrotherReports(dayCounter, player, brother, inventory, playerStockHoldingsTextArea));
+
+
+        //setting the location of the brother's stock holdings panel
+        brotherStockHoldings.setBounds(420,440,300,100);
+        brotherStockHoldings.setBackground(new Color(0, 0, 0, 125));
 
         //adding the elements to the frame
         frame.setContentPane(backgroundImg);
-        frame.getContentPane().add(welcomeBanner);
+        frame.getContentPane().add(welcomeBannerPanel);
+        frame.getContentPane().add(welcomeBannerPanelLabel);
         frame.getContentPane().add(tradingTimerPanel);
+        frame.getContentPane().add(timeRemaining);
         frame.getContentPane().add(endTradingDay);
         frame.getContentPane().add(breakingNews);
         frame.getContentPane().add(newsTicker);
         frame.getContentPane().add(buyStock);
         frame.getContentPane().add(sellStock);
+        frame.getContentPane().add(playerStockHoldingsPanel);
+        frame.getContentPane().add(brotherStockHoldings);
+
 
 
         buyStock.addActionListener(new ActionListener() {
@@ -342,6 +389,7 @@ public class GuiLogic extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
                 frame.repaint();
+                dayCounter++;
                 guiTradingRoom();
             }
         });
@@ -358,7 +406,7 @@ public class GuiLogic extends javax.swing.JFrame {
         stockBuySymbol = new JTextField();
         stockBuyQuantity = new JTextField();
         stockPurchaseHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
-        stockPurchaseQuantityHeading = new JLabel("How many shares would you like? Integers only");
+        stockPurchaseQuantityHeading = new JLabel("How many shares would you like? (Integers only): ");
         insufficientBuyBalance = new JTextArea();
 
         //adding the background
@@ -400,7 +448,7 @@ public class GuiLogic extends javax.swing.JFrame {
         stockBuyQuantity.setBounds(240, 320, 100, 25);
 
         //setting the heading for the stock quantity field/heading
-        stockPurchaseQuantityHeading.setBounds(140, 290, 400, 25);
+        stockPurchaseQuantityHeading.setBounds(140, 290, 700, 25);
 
         //adding to the content pane
         buyMenuPopup.setContentPane(buyMenuBackgroundImg);
@@ -426,9 +474,9 @@ public class GuiLogic extends javax.swing.JFrame {
                 Integer stockQuant = Integer.parseInt(stockBuyQuantity.getText());
 
                 try {
-                    TradingRoom.menuOneBuy(0, stockBought, stockQuant, insufficientBuyBalance);
+                    TradingRoom.menuOneBuy(dayCounter, stockBought, stockQuant, insufficientBuyBalance);
                     JOptionPane.showMessageDialog(null,insufficientBuyBalance);
-                    buyMenuPopup.dispose();
+
                 } catch (UnsupportedAudioFileException ex) {
                     throw new RuntimeException(ex);
                 } catch (LineUnavailableException ex) {
@@ -438,9 +486,9 @@ public class GuiLogic extends javax.swing.JFrame {
                 }
 
             }
+
+
         });
-
-
 
     }
 
@@ -454,8 +502,8 @@ public class GuiLogic extends javax.swing.JFrame {
         cancelSellStockMenuButton = new JButton("Cancel");
         stockSellSymbol = new JTextField();
         stockSellQuantity = new JTextField();
-        stockSellHeading = new JLabel("Please enter the symbol of the stock you want to purchase:");
-        stockSellQuantityHeading = new JLabel("How many shares would you like? Integers only");
+        stockSellHeading = new JLabel("Please enter the symbol of the stock you want to sell: ");
+        stockSellQuantityHeading = new JLabel("               Please enter the quantity: ");
 
         //adding the background
         sellMenuBackground = new ImageIcon("");
@@ -476,7 +524,7 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting sell menu stock listing location
         sellMenuStocksPanel.setSize(600,200);
         sellMenuStocksListing.setEditable(false);
-        //sellMenuStocksPanel.add(SellingRoom.menuTwoSell());
+        sellMenuStocksPanel.add(SellingRoom.showPlayerHoldings(sellMenuStocksListing));
 
         //setting the submit button location
         submitSellStockMenuButton.setBounds(115,400,100,50);
@@ -486,18 +534,17 @@ public class GuiLogic extends javax.swing.JFrame {
         cancelSellStockMenuButton.setBounds(365,400,100,50);
         cancelSellStockMenuButton.setBackground(Color.ORANGE);
 
-
         //setting the stock symbol text field
-        //stockBuySymbol.setBounds(240,250,100,25);
+        stockSellSymbol.setBounds(240,250,100,25);
 
         //setting the heading for the stock name heading
-        //stockPurchaseHeading.setBounds(120,220,400,25);
+        stockSellHeading.setBounds(120,220,400,25);
 
         //setting the stock quantity text field
-        //stockBuyQuantity.setBounds(240, 320, 100, 25);
+        stockSellQuantity.setBounds(240, 320, 100, 25);
 
         //setting the heading for the stock quantity field/heading
-        //stockPurchaseQuantityHeading.setBounds(140,290,400,25);
+        stockSellQuantityHeading.setBounds(140,290,400,25);
 
         //adding to the content pane
         sellMenuPopup.setContentPane(sellMenuBackgroundImg);
