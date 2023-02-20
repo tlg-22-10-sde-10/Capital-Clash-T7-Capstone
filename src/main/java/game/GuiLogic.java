@@ -414,6 +414,28 @@ public class GuiLogic extends javax.swing.JFrame {
             }
         });
 
+        submitBuyStockMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String stockBought = stockBuySymbol.getText();
+                Integer stockQuant = Integer.parseInt(stockBuyQuantity.getText());
+
+                try {
+                    TradingRoom.menuOneBuy(0, stockBought, stockQuant, insufficientBuyBalance);
+                    JOptionPane.showMessageDialog(null,insufficientBuyBalance);
+                    buyMenuPopup.dispose();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        });
+
+
 
     }
 
@@ -449,7 +471,7 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting sell menu stock listing location
         sellMenuStocksPanel.setSize(600,200);
         sellMenuStocksListing.setEditable(false);
-        sellMenuStocksPanel.add(SellingRoom.menuTwoSell());
+        //sellMenuStocksPanel.add(SellingRoom.menuTwoSell());
 
         //setting the submit button location
         submitSellStockMenuButton.setBounds(115,400,100,50);
@@ -488,29 +510,6 @@ public class GuiLogic extends javax.swing.JFrame {
                 sellMenuPopup.dispose();
             }
         });
-
-
-        submitBuyStockMenuButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String stockBought = stockBuySymbol.getText();
-                Integer stockQuant = Integer.parseInt(stockBuyQuantity.getText());
-
-                try {
-                    TradingRoom.menuOneBuy(2, stockBought, stockQuant, insufficientBuyBalance);
-                    JOptionPane.showMessageDialog(null,insufficientBuyBalance);
-                    buyMenuPopup.dispose();
-                } catch (UnsupportedAudioFileException ex) {
-                    throw new RuntimeException(ex);
-                } catch (LineUnavailableException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-            }
-        });
-
 
 
     }
