@@ -509,6 +509,7 @@ public class GuiLogic extends javax.swing.JFrame {
                 try {
                     TradingRoom.menuOneBuy(dayCounter, stockBought, stockQuant, insufficientBuyBalance);
                     JOptionPane.showMessageDialog(null,insufficientBuyBalance);
+                    buyMenuPopup.dispose();
 
                 } catch (UnsupportedAudioFileException ex) {
                     throw new RuntimeException(ex);
