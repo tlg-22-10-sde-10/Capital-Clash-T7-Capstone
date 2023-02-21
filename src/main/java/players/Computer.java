@@ -55,7 +55,7 @@ public class Computer {
 
     public double getBalanceFromHolding(StockInventory inventory) {
 
-        double stockBalance=0.0;
+        double stockBalance=0.00;
         if(stocks == null) {
 
             return stockBalance;
