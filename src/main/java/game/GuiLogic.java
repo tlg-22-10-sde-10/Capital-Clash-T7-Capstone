@@ -4,7 +4,10 @@ import guigamelogic.CountdownTimer;
 import guigamelogic.GameStory;
 import guigamelogic.SellingRoom;
 import guigamelogic.TradingRoom;
+import players.Computer;
+import players.Player;
 import random.RandomNumberForNews;
+import storage.StockInventory;
 import ui.GlobalMethodsAndAttributes;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -69,6 +72,7 @@ public class GuiLogic extends javax.swing.JFrame {
     private JTextArea tradingRoomStockPanelTextArea;
     private JTextArea gameStoryText;
     private JTextArea playerStockHoldingsTextArea;
+    private JTextArea brotherStockHoldingsTextArea;
     private JTextArea insufficientBuyBalance;
     private JScrollPane scrollPane;
     private JScrollPane tradingRoomStockPanelScrollPane;
@@ -226,17 +230,16 @@ public class GuiLogic extends javax.swing.JFrame {
         tradingTimerPanel = new JPanel();
         endTradingDay = new JButton();
         breakingNews = new JLabel();
-        //newsTicker = new JPanel();
         buyStock = new JButton();
         sellStock = new JButton();
         brotherStockHoldings = new JPanel();
         playerStockHoldingsPanel = new JPanel();
         playerStockHoldingsTextArea = new JTextArea();
+        brotherStockHoldingsTextArea = new JTextArea();
         timeRemaining = new JLabel(CountdownTimer.getTimeRemaining());
         tradingTimerPanel = new JPanel();
         tradingRoomStockPanel = new JPanel();
         tradingRoomStockPanelTextArea = new JTextArea();
-
 
 
         //start trading for the day
@@ -277,6 +280,7 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting the location of the breaking news header
         breakingNews.setBounds(330, 100, 300, 50);
         breakingNews.setText("*** BREAKING NEWS ***");
+        breakingNews.setFont(new Font("Playfair Display", Font.BOLD, 14));
 
         //setting the location of the news ticker
         int newsIndexOfTheDay = RandomNumberForNews.getRandomNumber();
@@ -286,47 +290,39 @@ public class GuiLogic extends javax.swing.JFrame {
         newsTicker.setBounds(100, 140, 600, 35);
         newsTicker.setFont(new Font("Playfair Display", Font.BOLD, 12));
         newsTicker.setBackground(new Color(0, 0, 0, 65));
-        newsTicker.setForeground(Color.red);
+        newsTicker.setForeground(Color.blue);
         newsTicker.setEditable(false);
         newsTicker.setLineWrap(true);
 
 
         //setting the location and description of the buy stock button
-        buyStock.setBounds(170, 375, 105, 40);
+        buyStock.setBounds(230, 405, 105, 40);
         buyStock.setText("Buy Stock");
         buyStock.setBackground(Color.GREEN);
 
         //setting the location and description of the sell button
-        sellStock.setBounds(510, 375, 105, 40);
+        sellStock.setBounds(450, 405, 105, 40);
         sellStock.setText("Sell Stock");
         sellStock.setBackground(Color.ORANGE);
 
 
-        //settting the location of the trading room's stock holdings panel
-
+        //setting the location of the trading room's stock holdings panel
         tradingRoomStockPanel.setBounds(145,190,500,200);
-        tradingRoomStockPanel.setBackground(new Color(0,0,0,125));
+        tradingRoomStockPanel.setBackground(new Color(0,0,0,0));
         tradingRoomStockPanelTextArea.setEditable(false);
         tradingRoomStockPanelTextArea.setVisible(true);
         tradingRoomStockPanelTextArea.setSize(500,200);
         tradingRoomStockPanel.add(TradingRoom.showStockInventory(tradingRoomStockPanelTextArea));
 
-//       //Code from buy panel to test
-//        tradingRoomStockPanel.setSize(600, 200);
-//        tradingRoomStockPanelTextArea.setEditable(false);
-//        tradingRoomStockPanel.add(TradingRoom.showStockInventory(tradingRoomStockPanelTextArea));
-
-
         //setting the location of the player's stock holdings panel
-        playerStockHoldingsPanel.setBounds(80,440, 300,100);
+        playerStockHoldingsPanel.setBounds(180,460, 155,85);
         playerStockHoldingsPanel.setBackground(new Color(0, 0, 0, 65));
-        //Doesn't work below TODO
-        playerStockHoldingsPanel.add(TradingRoom.playerVsBrotherReports(dayCounter, player, brother, inventory, playerStockHoldingsTextArea));
-
+        playerStockHoldingsPanel.add(TradingRoom.playerReport(dayCounter, player, inventory, playerStockHoldingsTextArea));
 
         //setting the location of the brother's stock holdings panel
-        brotherStockHoldings.setBounds(420,440,300,100);
+        brotherStockHoldings.setBounds(450,460,155,85);
         brotherStockHoldings.setBackground(new Color(0, 0, 0, 65));
+        brotherStockHoldings.add(TradingRoom.brotherReport(dayCounter, brother, inventory, brotherStockHoldingsTextArea));
 
         //adding the elements to the frame
         frame.setContentPane(backgroundImg);
@@ -344,13 +340,10 @@ public class GuiLogic extends javax.swing.JFrame {
         frame.getContentPane().add(brotherStockHoldings);
 
 
-
-
         buyStock.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buyMenuCreator();
-
             }
         });
 
@@ -359,7 +352,6 @@ public class GuiLogic extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sellMenuCreator();
-
             }
         });
 
@@ -458,7 +450,7 @@ public class GuiLogic extends javax.swing.JFrame {
         buyMenuPopup.setResizable(false);
         buyMenuPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        //setting buymenu stock listing location
+        //setting buy menu stock listing location
         buyMenuStocksPanel.setSize(600, 200);
         buyMenuStocksListing.setEditable(false);
         buyMenuStocksPanel.add(TradingRoom.showStockInventory(buyMenuStocksListing));
@@ -509,18 +501,12 @@ public class GuiLogic extends javax.swing.JFrame {
                 try {
                     TradingRoom.menuOneBuy(dayCounter, stockBought, stockQuant, insufficientBuyBalance);
                     JOptionPane.showMessageDialog(null,insufficientBuyBalance);
-
-                } catch (UnsupportedAudioFileException ex) {
-                    throw new RuntimeException(ex);
-                } catch (LineUnavailableException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
+                    TradingRoom.playerReport(dayCounter, player, inventory, tradingRoomStockPanelTextArea);
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
 
             }
-
-
         });
 
     }

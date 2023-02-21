@@ -112,33 +112,34 @@ public class TradingRoom {
         return buyMenuTextArea;
     }
 
-    public static JTextArea playerVsBrotherReports(int day, Player player, Computer brother, StockInventory inventory, JTextArea stockHoldingsTextArea) {
-        //if (player != null && brother != null && inventory != null) {
+    public static JTextArea playerReport (int day, Player player, StockInventory inventory, JTextArea stockHoldingsTextArea) {
+        if (player != null && inventory != null) {
 
             double playerStockBalance = player.getBalanceFromHolding(inventory);
-            double brotherStockBalance = brother.getBalanceFromHolding(inventory);
+            Object playerStock = player.getStocks() == null ? "Empty" : player.getStocks();
+
+            String playerBalance = "YOU\n" + "Stocks: " + playerStock + "\nCash Balance: $" + (player.getAccount().getCashBalance()) + "\n" + "Stock Balance: $" +
+                    (playerStockBalance) + "\n" + "Net Balance: $" + (player.getAccount().getCashBalance() + playerStockBalance);
+
+            stockHoldingsTextArea.append(playerBalance);
 
 
-//            System.out.println(String.format(ANSI_YELLOW + "%-42s DAY: %-10s\n", "", day + ANSI_RESET));
-//            System.out.println(String.format("%-18s %-42s %-14s", "", ANSI_CYAN_BACKGROUND+"You         " + ANSI_RESET, ANSI_CYAN_BACKGROUND + "Brother     " + ANSI_RESET));
-//
-//            System.out.println(String.format("%-18s Stocks: %-25s Stocks: %-10s", "",
-//                    player.getStocks() == null ? "Empty" : player.getStocks(),
-//                    brother.getStocks() == null ? "Empty" : brother.getStocks()));
-//
-//            System.out.println(String.format("%-18s Cash Balance:$%-19.2f Cash Balance:$%-10.2f",
-//                    "", player.getAccount().getCashBalance(), brother.getAccount().getCashBalance()));
-//            System.out.println(String.format("%-18s Stock Balance:$%-18.2f Stock Balance:$%-10.2f",
-//                    "", playerStockBalance, brotherStockBalance));
-//            System.out.println(String.format("%-18s Net Balance:$%-20.2f Net Balance:$%-10.2f\n",
-//                    "", playerStockBalance + player.getAccount().getCashBalance(), brotherStockBalance + brother.getAccount().getCashBalance()));
-//
-            stockHoldingsTextArea.append(String.valueOf((playerStockBalance + brotherStockBalance)));
-
-
+        }
         return stockHoldingsTextArea;
-
     }
 
+    public static JTextArea brotherReport (int day, Computer brother, StockInventory inventory, JTextArea stockHoldingsTextArea) {
+        if (brother != null && inventory != null) {
+
+            double brotherStockBalance = brother.getBalanceFromHolding(inventory);
+            Object brotherStock = brother.getStocks() == null ? "Empty" : player.getStocks();
+
+            String brotherBalance = "BROTHER\n" + "Stocks: " + brotherStock + "\nCash Balance: $" + (brother.getAccount().getCashBalance()) + "\n" + "Stock Balance: $" +
+                    (brotherStockBalance) + "\n" + "Net Balance: $" + (brother.getAccount().getCashBalance() + brotherStockBalance);
+
+            stockHoldingsTextArea.append(brotherBalance);
+        }
+        return stockHoldingsTextArea;
+    }
 
 }
