@@ -61,12 +61,15 @@ public class GuiLogic extends javax.swing.JFrame {
     private JPanel sellMenuStocksPanel;
     private JPanel brotherStockHoldings;
     private JPanel playerStockHoldingsPanel;
+    private JPanel tradingRoomStockPanel;
 
     //Game Text & Panes
+    private JTextArea tradingRoomStockPanelTextArea;
     private JTextArea gameStoryText;
     private JTextArea playerStockHoldingsTextArea;
     private JTextArea insufficientBuyBalance;
     private JScrollPane scrollPane;
+    private JScrollPane tradingRoomStockPanelScrollPane;
     private JTextArea buyMenuStocksListing;
     private JTextArea sellMenuStocksListing;
     private JTextField stockBuySymbol;
@@ -228,6 +231,10 @@ public class GuiLogic extends javax.swing.JFrame {
         playerStockHoldingsPanel = new JPanel();
         playerStockHoldingsTextArea = new JTextArea();
         timeRemaining = new JLabel(CountdownTimer.getTimeRemaining());
+        tradingTimerPanel = new JPanel();
+        tradingRoomStockPanel = new JPanel();
+        tradingRoomStockPanelTextArea = new JTextArea();
+
 
 
         //start trading for the day
@@ -235,7 +242,7 @@ public class GuiLogic extends javax.swing.JFrame {
         CountdownTimer.startTimer(5);
 
         //changes the background image
-        tradingRoomBackground = new ImageIcon("src/main/resources/Trading-Room.jpg");
+        tradingRoomBackground = new ImageIcon("");
         backgroundImg = new JLabel(tradingRoomBackground);
 
         //setting the background picture and location
@@ -286,6 +293,22 @@ public class GuiLogic extends javax.swing.JFrame {
         sellStock.setText("Sell Stock");
         sellStock.setBackground(Color.ORANGE);
 
+
+        //settting the location of the trading room's stock holdings panel
+
+        tradingRoomStockPanel.setBounds(145,190,500,200);
+        tradingRoomStockPanel.setBackground(new Color(0,0,0,125));
+        tradingRoomStockPanelTextArea.setEditable(false);
+        tradingRoomStockPanelTextArea.setVisible(true);
+        tradingRoomStockPanelTextArea.setSize(500,200);
+        tradingRoomStockPanel.add(TradingRoom.showStockInventory(tradingRoomStockPanelTextArea));
+
+//       //Code from buy panel to test
+//        tradingRoomStockPanel.setSize(600, 200);
+//        tradingRoomStockPanelTextArea.setEditable(false);
+//        tradingRoomStockPanel.add(TradingRoom.showStockInventory(tradingRoomStockPanelTextArea));
+
+
         //setting the location of the player's stock holdings panel
         playerStockHoldingsPanel.setBounds(80,440, 300,100);
         playerStockHoldingsPanel.setBackground(new Color(0, 0, 0, 125));
@@ -299,6 +322,7 @@ public class GuiLogic extends javax.swing.JFrame {
 
         //adding the elements to the frame
         frame.setContentPane(backgroundImg);
+        frame.getContentPane().add(tradingRoomStockPanel);
         frame.getContentPane().add(welcomeBannerPanel);
         frame.getContentPane().add(welcomeBannerPanelLabel);
         frame.getContentPane().add(tradingTimerPanel);
@@ -310,6 +334,7 @@ public class GuiLogic extends javax.swing.JFrame {
         frame.getContentPane().add(sellStock);
         frame.getContentPane().add(playerStockHoldingsPanel);
         frame.getContentPane().add(brotherStockHoldings);
+
 
 
 
@@ -470,7 +495,7 @@ public class GuiLogic extends javax.swing.JFrame {
         submitBuyStockMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String stockBought = stockBuySymbol.getText();
+                String stockBought = stockBuySymbol.getText().toUpperCase();
                 Integer stockQuant = Integer.parseInt(stockBuyQuantity.getText());
 
                 try {
