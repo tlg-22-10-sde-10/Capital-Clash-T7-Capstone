@@ -254,7 +254,7 @@ public class GuiLogic extends javax.swing.JFrame {
         welcomeBannerPanelLabel.setText(" Welcome to Trading Day: " + dayCounter);
         welcomeBannerPanelLabel.setForeground(Color.black);
         welcomeBannerPanelLabel.setFont(new Font("Playfair Display", Font.BOLD, 18));
-        welcomeBannerPanelLabel.setBounds(290, 10,800,20);
+        welcomeBannerPanelLabel.setBounds(280, 10,800,20);
 
         //setting the welcome banner location and color
         welcomeBannerPanel.setBounds(0, 0, 800, 25);
@@ -283,10 +283,10 @@ public class GuiLogic extends javax.swing.JFrame {
         newsTicker = new JTextArea(" - " + news.getNewsContent(newsIndexOfTheDay));
         newsScrollPane = new JScrollPane(newsTicker);
         newsScrollPane.getViewport().setOpaque(false);
-        newsTicker.setBounds(100, 140, 600, 40);
+        newsTicker.setBounds(100, 140, 600, 35);
         newsTicker.setFont(new Font("Playfair Display", Font.BOLD, 12));
         newsTicker.setBackground(new Color(0, 0, 0, 65));
-        newsTicker.setForeground(Color.blue);
+        newsTicker.setForeground(Color.red);
         newsTicker.setEditable(false);
         newsTicker.setLineWrap(true);
 
@@ -319,14 +319,14 @@ public class GuiLogic extends javax.swing.JFrame {
 
         //setting the location of the player's stock holdings panel
         playerStockHoldingsPanel.setBounds(80,440, 300,100);
-        playerStockHoldingsPanel.setBackground(new Color(0, 0, 0, 125));
+        playerStockHoldingsPanel.setBackground(new Color(0, 0, 0, 65));
         //Doesn't work below TODO
         playerStockHoldingsPanel.add(TradingRoom.playerVsBrotherReports(dayCounter, player, brother, inventory, playerStockHoldingsTextArea));
 
 
         //setting the location of the brother's stock holdings panel
         brotherStockHoldings.setBounds(420,440,300,100);
-        brotherStockHoldings.setBackground(new Color(0, 0, 0, 125));
+        brotherStockHoldings.setBackground(new Color(0, 0, 0, 65));
 
         //adding the elements to the frame
         frame.setContentPane(backgroundImg);
