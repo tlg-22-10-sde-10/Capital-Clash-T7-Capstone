@@ -572,7 +572,8 @@ public class GuiLogic extends javax.swing.JFrame {
                 String stockQuantity = stockSellQuantity.getText();
 
                 try {
-                    SellingRoom.menuTwoSell(stockSold, stockQuantity);
+                    SellingRoom.menuTwoSell(dayCounter,stockSold, Integer.parseInt(stockQuantity),insufficientBuyBalance);
+                    JOptionPane.showMessageDialog(null,insufficientBuyBalance);
                     sellMenuPopup.dispose();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
