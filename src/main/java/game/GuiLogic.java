@@ -495,6 +495,7 @@ public class GuiLogic extends javax.swing.JFrame {
 
     public void sellMenuCreator() {
         //Getting the J things
+
         sellMenuStocksListing = new JTextArea();
         sellMenuStocksPanel = new JPanel();
         sellMenuPopup = new JFrame();
@@ -574,10 +575,12 @@ public class GuiLogic extends javax.swing.JFrame {
                 try {
                     SellingRoom.menuTwoSell(dayCounter,stockSold, Integer.parseInt(stockQuantity),insufficientBuyBalance);
                     JOptionPane.showMessageDialog(null,insufficientBuyBalance);
+
                     sellMenuPopup.dispose();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+
 
             }
         });
