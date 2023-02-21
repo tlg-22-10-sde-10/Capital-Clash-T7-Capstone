@@ -4,6 +4,7 @@ import guigamelogic.CountdownTimer;
 import guigamelogic.GameStory;
 import guigamelogic.SellingRoom;
 import guigamelogic.TradingRoom;
+import random.RandomNumberForNews;
 import ui.GlobalMethodsAndAttributes;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -56,7 +57,8 @@ public class GuiLogic extends javax.swing.JFrame {
     //Game Panels
     private JPanel welcomeBannerPanel;
     private JPanel tradingTimerPanel;
-    private JPanel newsTicker;
+    private JTextArea newsTicker;
+    private JScrollPane newsScrollPane;
     private JPanel buyMenuStocksPanel;
     private JPanel sellMenuStocksPanel;
     private JPanel brotherStockHoldings;
@@ -221,7 +223,7 @@ public class GuiLogic extends javax.swing.JFrame {
         tradingTimerPanel = new JPanel();
         endTradingDay = new JButton();
         breakingNews = new JLabel();
-        newsTicker = new JPanel();
+        //newsTicker = new JPanel();
         buyStock = new JButton();
         sellStock = new JButton();
         brotherStockHoldings = new JPanel();
@@ -235,7 +237,7 @@ public class GuiLogic extends javax.swing.JFrame {
         CountdownTimer.startTimer(5);
 
         //changes the background image
-        tradingRoomBackground = new ImageIcon("src/main/resources/Trading-Room.jpg");
+        tradingRoomBackground = new ImageIcon("");
         backgroundImg = new JLabel(tradingRoomBackground);
 
         //setting the background picture and location
@@ -243,27 +245,25 @@ public class GuiLogic extends javax.swing.JFrame {
 
         //setting the text to go into the welcome banner
         welcomeBannerPanelLabel.setText(" Welcome to Trading Day: " + dayCounter);
-        welcomeBannerPanelLabel.setForeground(Color.BLUE);
-        welcomeBannerPanelLabel.setBounds(315, 0,800,20);
+        welcomeBannerPanelLabel.setForeground(Color.black);
+        welcomeBannerPanelLabel.setFont(new Font("Playfair Display", Font.BOLD, 18));
+        welcomeBannerPanelLabel.setBounds(290, 10,800,20);
 
         //setting the welcome banner location and color
         welcomeBannerPanel.setBounds(0, 0, 800, 25);
-        welcomeBannerPanel.setBackground(new Color(0, 0, 0, 125));
-        welcomeBannerPanel.setBorder(new LineBorder(Color.BLUE));
-
+        welcomeBannerPanel.setBackground(new Color(0, 0, 0, 0));
 
         //setting the trading timer location and color
-        tradingTimerPanel.setBounds(40, 40, 100, 20);
-        tradingTimerPanel.setBackground(new Color(0, 0, 0, 125));
+        tradingTimerPanel.setBounds(30, 50, 100, 40);
+        tradingTimerPanel.setBackground(new Color(0, 0, 0, 65));
         tradingTimerPanel.add(timeRemaining);
 
-
         //setting time remaining location
-        timeRemaining.setBounds(40,40,100,100);
+        timeRemaining.setBounds(60,20,100,100);
         timeRemaining.setBackground(Color.GREEN);
 
         //setting the location end trading day/go to room button
-        endTradingDay.setBounds(650, 40, 105, 40);
+        endTradingDay.setBounds(620, 50, 150, 40);
         endTradingDay.setBackground(Color.GREEN);
         endTradingDay.setText("End Trading Day");
 
@@ -272,11 +272,19 @@ public class GuiLogic extends javax.swing.JFrame {
         breakingNews.setText("*** BREAKING NEWS ***");
 
         //setting the location of the news ticker
+        int newsIndexOfTheDay = RandomNumberForNews.getRandomNumber();
+        newsTicker = new JTextArea(" - " + news.getNewsContent(newsIndexOfTheDay));
+        newsScrollPane = new JScrollPane(newsTicker);
+        newsScrollPane.getViewport().setOpaque(false);
         newsTicker.setBounds(100, 140, 600, 40);
-        newsTicker.setBackground(new Color(0, 0, 0, 125));
+        newsTicker.setFont(new Font("Playfair Display", Font.BOLD, 12));
+        newsTicker.setBackground(new Color(0, 0, 0, 65));
+        newsTicker.setForeground(Color.blue);
+        newsTicker.setEditable(false);
+        newsTicker.setLineWrap(true);
 
 
-        //setting the location and description of the buystock button
+        //setting the location and description of the buy stock button
         buyStock.setBounds(170, 375, 105, 40);
         buyStock.setText("Buy Stock");
         buyStock.setBackground(Color.GREEN);
