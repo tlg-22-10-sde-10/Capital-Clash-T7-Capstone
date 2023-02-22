@@ -104,13 +104,12 @@ public class GuiLogic extends javax.swing.JFrame {
     }
 
     //Game Day Counter
-    public static int dayCounter = 1;
+    public static int dayCounter = 0;
 
     public GuiLogic() {
         initGui();
         frame.setVisible(true);
     }
-
 
 
     //Initializing the GUI, new game and quit buttons
@@ -184,6 +183,7 @@ public class GuiLogic extends javax.swing.JFrame {
     }
 
     public void guiGameStory() {
+
         newGame.setVisible(false);
         gameStoryText = new JTextArea(GameStory.displayGameInfo());
         scrollPane = new JScrollPane(gameStoryText);
@@ -257,7 +257,7 @@ public class GuiLogic extends javax.swing.JFrame {
         welcomeBannerPanelLabel.setText(" Welcome to Trading Day: " + dayCounter);
         welcomeBannerPanelLabel.setForeground(Color.black);
         welcomeBannerPanelLabel.setFont(new Font("Playfair Display", Font.BOLD, 18));
-        welcomeBannerPanelLabel.setBounds(280, 10,800,20);
+        welcomeBannerPanelLabel.setBounds(280, 10, 800, 20);
 
         //setting the welcome banner location and color
         welcomeBannerPanel.setBounds(0, 0, 800, 25);
@@ -269,7 +269,7 @@ public class GuiLogic extends javax.swing.JFrame {
         tradingTimerPanel.add(timeRemaining);
 
         //setting time remaining location
-        timeRemaining.setBounds(60,20,100,100);
+        timeRemaining.setBounds(60, 20, 100, 100);
         timeRemaining.setBackground(Color.GREEN);
 
         //setting the location end trading day/go to room button
@@ -307,20 +307,20 @@ public class GuiLogic extends javax.swing.JFrame {
 
 
         //setting the location of the trading room's stock holdings panel
-        tradingRoomStockPanel.setBounds(145,190,500,200);
-        tradingRoomStockPanel.setBackground(new Color(0,0,0,0));
+        tradingRoomStockPanel.setBounds(145, 190, 500, 200);
+        tradingRoomStockPanel.setBackground(new Color(0, 0, 0, 0));
         tradingRoomStockPanelTextArea.setEditable(false);
         tradingRoomStockPanelTextArea.setVisible(true);
-        tradingRoomStockPanelTextArea.setSize(500,200);
+        tradingRoomStockPanelTextArea.setSize(500, 200);
         tradingRoomStockPanel.add(TradingRoom.showStockInventory(tradingRoomStockPanelTextArea));
 
         //setting the location of the player's stock holdings panel
-        playerStockHoldingsPanel.setBounds(180,460, 155,85);
+        playerStockHoldingsPanel.setBounds(180, 460, 155, 85);
         playerStockHoldingsPanel.setBackground(new Color(0, 0, 0, 65));
         playerStockHoldingsPanel.add(TradingRoom.playerReport(dayCounter, player, inventory, playerStockHoldingsTextArea));
 
         //setting the location of the brother's stock holdings panel
-        brotherStockHoldings.setBounds(450,460,155,85);
+        brotherStockHoldings.setBounds(450, 460, 155, 85);
         brotherStockHoldings.setBackground(new Color(0, 0, 0, 65));
         brotherStockHoldings.add(TradingRoom.brotherReport(dayCounter, brother, inventory, brotherStockHoldingsTextArea));
 
@@ -344,6 +344,7 @@ public class GuiLogic extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buyMenuCreator();
+
             }
         });
 
@@ -352,6 +353,7 @@ public class GuiLogic extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sellMenuCreator();
+
             }
         });
 
@@ -415,7 +417,30 @@ public class GuiLogic extends javax.swing.JFrame {
                 frame.getContentPane().removeAll();
                 frame.repaint();
                 dayCounter++;
+                try {
+                    GlobalMethodsAndAttributes.nextDayOps(dayCounter);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 guiTradingRoom();
+                try {
+                    tradingDaysEnd(dayCounter);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             }
         });
     }
@@ -500,8 +525,9 @@ public class GuiLogic extends javax.swing.JFrame {
 
                 try {
                     TradingRoom.menuOneBuy(dayCounter, stockBought, stockQuant, insufficientBuyBalance);
-                    JOptionPane.showMessageDialog(null,insufficientBuyBalance);
+                    JOptionPane.showMessageDialog(null, insufficientBuyBalance);
                     TradingRoom.playerReport(dayCounter, player, inventory, tradingRoomStockPanelTextArea);
+                    guiTradingRoom();
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -541,29 +567,29 @@ public class GuiLogic extends javax.swing.JFrame {
         sellMenuPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //setting sell menu stock listing location
-        sellMenuStocksPanel.setSize(600,200);
+        sellMenuStocksPanel.setSize(600, 200);
         sellMenuStocksListing.setEditable(false);
         sellMenuStocksPanel.add(SellingRoom.showPlayerHoldings(sellMenuStocksListing));
 
         //setting the submit button location
-        submitSellStockMenuButton.setBounds(115,400,100,50);
+        submitSellStockMenuButton.setBounds(115, 400, 100, 50);
         submitSellStockMenuButton.setBackground(Color.GREEN);
 
         //setting the cancel button location
-        cancelSellStockMenuButton.setBounds(365,400,100,50);
+        cancelSellStockMenuButton.setBounds(365, 400, 100, 50);
         cancelSellStockMenuButton.setBackground(Color.ORANGE);
 
         //setting the stock symbol text field
-        stockSellSymbol.setBounds(240,250,100,25);
+        stockSellSymbol.setBounds(240, 250, 100, 25);
 
         //setting the heading for the stock name heading
-        stockSellHeading.setBounds(120,220,400,25);
+        stockSellHeading.setBounds(120, 220, 400, 25);
 
         //setting the stock quantity text field
         stockSellQuantity.setBounds(240, 320, 100, 25);
 
         //setting the heading for the stock quantity field/heading
-        stockSellQuantityHeading.setBounds(140,290,400,25);
+        stockSellQuantityHeading.setBounds(140, 290, 400, 25);
 
         //adding to the content pane
         sellMenuPopup.setContentPane(sellMenuBackgroundImg);
@@ -583,7 +609,6 @@ public class GuiLogic extends javax.swing.JFrame {
         });
 
 
-
         submitSellStockMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -591,9 +616,10 @@ public class GuiLogic extends javax.swing.JFrame {
                 String stockQuantity = stockSellQuantity.getText();
 
                 try {
-                    SellingRoom.menuTwoSell(dayCounter,stockSold, Integer.parseInt(stockQuantity),insufficientBuyBalance);
-                    JOptionPane.showMessageDialog(null,insufficientBuyBalance);
+                    SellingRoom.menuTwoSell(dayCounter, stockSold, Integer.parseInt(stockQuantity), insufficientBuyBalance);
+                    JOptionPane.showMessageDialog(null, insufficientBuyBalance);
                     sellMenuPopup.dispose();
+                    guiTradingRoom();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -603,7 +629,40 @@ public class GuiLogic extends javax.swing.JFrame {
 
     }
 
+
+    public void tradingDaysEnd(int dayCounter) throws InterruptedException, UnsupportedAudioFileException, LineUnavailableException, IOException {
+
+        double totalPlayerBalance = player.getAccount().getCashBalance();
+        double totalBrotherBalance = brother.getAccount().getCashBalance();
+
+        if (dayCounter == 5) {
+            totalPlayerBalance += calculatePriceFromMap(playerStockMap);
+            totalBrotherBalance += calculatePriceFromMap(brotherStockMap);
+
+            if (totalPlayerBalance > totalBrotherBalance) {
+
+                JOptionPane.showInternalMessageDialog(null, "You WIN, The Company is yours!");
+                GlobalMethodsAndAttributes.playAudio("piglevelwin2mp3-14800.wav");
+                frame.dispose();
+            } else if (totalPlayerBalance < totalBrotherBalance) {
+                JOptionPane.showInternalMessageDialog(null, "You LOSE, the future CEO is your brother");
+                GlobalMethodsAndAttributes.playAudio("sadTrombone(1).wav");
+                frame.dispose();
+
+            } else {
+                JOptionPane.showInternalMessageDialog(null, "You tied with your brother? Your father decided to keep the company...");
+                frame.dispose();
+            }
+
+        } else if (dayCounter == 4) {
+            JOptionPane.showInternalMessageDialog(null, "Tomorrow is your last day of trading, make it count!");
+        }
+    }
+
 }
+
+
+
 
 
 

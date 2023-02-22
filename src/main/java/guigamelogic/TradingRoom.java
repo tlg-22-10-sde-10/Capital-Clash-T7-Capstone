@@ -20,8 +20,6 @@ public class TradingRoom {
     public static void menuOneBuy(int day, String stockSymbol, int numberOfStockPurchased, JTextArea textArea) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
 
-        GlobalMethodsAndAttributes.initializeGlobalInstances();
-
         if (!isValidStockSymbol(stockSymbol)) {
             showInvalidStockSymbolMessage(day, textArea);
             stockSymbol = promptForValidStockSymbol(day, textArea, stockSymbol);
@@ -132,7 +130,7 @@ public class TradingRoom {
         if (brother != null && inventory != null) {
 
             double brotherStockBalance = brother.getBalanceFromHolding(inventory);
-            Object brotherStock = brother.getStocks() == null ? "Empty" : player.getStocks();
+            Object brotherStock = brother.getStocks() == null ? "Empty" : brother.getStocks();
 
             String brotherBalance = "BROTHER\n" + "Stocks: " + brotherStock + "\nCash Balance: $" + (brother.getAccount().getCashBalance()) + "\n" + "Stock Balance: $" +
                     (brotherStockBalance) + "\n" + "Net Balance: $" + (brother.getAccount().getCashBalance() + brotherStockBalance);
