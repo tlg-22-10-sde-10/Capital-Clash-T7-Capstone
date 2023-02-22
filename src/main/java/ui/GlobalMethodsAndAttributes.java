@@ -108,7 +108,7 @@ public class GlobalMethodsAndAttributes {
         }
     }
 
-    private static double calculatePriceFromMap(Map<String, Integer> map) {
+    public static double calculatePriceFromMap(Map<String, Integer> map) {
         double totalBalance = 0.0;
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             totalBalance += inventory.findBySymbol(entry.getKey())

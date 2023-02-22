@@ -71,11 +71,9 @@ public class TradingRoom {
     }
 
     private static void purchaseStock(int day, Stock playerStock, int numberOfStockPurchased, JTextArea textArea) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        List<String> stocks = new ArrayList<>(playerStocks);
-        if(playerStockMap.containsKey(playerStock.getSymbol())){
+        if (playerStockMap.containsKey(playerStock.getSymbol())) {
             playerStockMap.put(playerStock.getSymbol(), playerStockMap.get(playerStock.getSymbol()) + numberOfStockPurchased);
-        }
-        else {
+        } else {
             playerStockMap.put(playerStock.getSymbol(), numberOfStockPurchased);
 
 
@@ -88,11 +86,7 @@ public class TradingRoom {
         player.setStocks(playerStockMap);
         player.getAccount().deductBalance(numberOfStockPurchased * playerStock.getCurrentPrice());
 
-        //GlobalMethodsAndAttributes.playAudio("cashier.wav.wav");
-        showSuccessfulPurchaseMessage(numberOfStockPurchased,playerStock,textArea);
-
-
-
+        showSuccessfulPurchaseMessage(numberOfStockPurchased, playerStock, textArea);
     }
 
     private static void showSuccessfulPurchaseMessage(int numberOfStockPurchased, Stock playerStock, JTextArea textArea) {

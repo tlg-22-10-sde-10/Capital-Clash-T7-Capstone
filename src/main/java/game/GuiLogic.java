@@ -189,6 +189,7 @@ public class GuiLogic extends javax.swing.JFrame {
     }
 
     public void guiGameStory() {
+
         newGame.setVisible(false);
         gameStoryText = new JTextArea(GameStory.displayGameInfo());
         scrollPane = new JScrollPane(gameStoryText);
@@ -295,7 +296,7 @@ public class GuiLogic extends javax.swing.JFrame {
         breakingNews.setForeground(Color.red);
 
         //setting the location of the news ticker
-        // int newsIndexOfTheDay = RandomNumberForNews.getRandomNumber();
+        int newsIndexOfTheDay = RandomNumberForNews.getRandomNumber();
         newsTicker = new JTextArea(" - " + news.getNewsContent(newsIndexOfTheDay));
         newsScrollPane = new JScrollPane(newsTicker);
         newsScrollPane.getViewport().setOpaque(false);
@@ -355,6 +356,7 @@ public class GuiLogic extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buyMenuCreator();
+
             }
         });
 
@@ -363,6 +365,7 @@ public class GuiLogic extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sellMenuCreator();
+
             }
         });
 
@@ -426,7 +429,30 @@ public class GuiLogic extends javax.swing.JFrame {
                 frame.getContentPane().removeAll();
                 frame.repaint();
                 dayCounter++;
+                try {
+                    GlobalMethodsAndAttributes.nextDayOps(dayCounter);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 guiTradingRoom();
+                try {
+                    tradingDaysEnd(dayCounter);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             }
         });
     }
@@ -513,6 +539,7 @@ public class GuiLogic extends javax.swing.JFrame {
                     TradingRoom.menuOneBuy(dayCounter, stockBought, stockQuant, insufficientBuyBalance);
                     JOptionPane.showMessageDialog(null,insufficientBuyBalance);
                     TradingRoom.playerReport(dayCounter, player, inventory, tradingRoomStockPanelTextArea);
+                    guiTradingRoom();
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -605,6 +632,7 @@ public class GuiLogic extends javax.swing.JFrame {
                     SellingRoom.menuTwoSell(dayCounter,stockSold, Integer.parseInt(stockQuantity),insufficientBuyBalance);
                     JOptionPane.showMessageDialog(null,insufficientBuyBalance);
                     sellMenuPopup.dispose();
+                    guiTradingRoom();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -612,6 +640,36 @@ public class GuiLogic extends javax.swing.JFrame {
             }
         });
 
+    }
+
+
+    public void tradingDaysEnd(int dayCounter) throws InterruptedException, UnsupportedAudioFileException, LineUnavailableException, IOException {
+
+        double totalPlayerBalance = player.getAccount().getCashBalance();
+        double totalBrotherBalance = brother.getAccount().getCashBalance();
+
+        if (dayCounter == 5) {
+            totalPlayerBalance += calculatePriceFromMap(playerStockMap);
+            totalBrotherBalance += calculatePriceFromMap(brotherStockMap);
+
+            if (totalPlayerBalance > totalBrotherBalance) {
+
+                JOptionPane.showInternalMessageDialog(null, "You WIN, The Company is yours!");
+                GlobalMethodsAndAttributes.playAudio("piglevelwin2mp3-14800.wav");
+                frame.dispose();
+            } else if (totalPlayerBalance < totalBrotherBalance) {
+                JOptionPane.showInternalMessageDialog(null, "You LOSE, the future CEO is your brother");
+                GlobalMethodsAndAttributes.playAudio("sadTrombone(1).wav");
+                frame.dispose();
+
+            } else {
+                JOptionPane.showInternalMessageDialog(null, "You tied with your brother? Your father decided to keep the company...");
+                frame.dispose();
+            }
+
+        } else if (dayCounter == 4) {
+            JOptionPane.showInternalMessageDialog(null, "Tomorrow is your last day of trading, make it count!");
+        }
     }
 
     public void updateStocks(){
@@ -627,6 +685,9 @@ public class GuiLogic extends javax.swing.JFrame {
     }
 
 }
+
+
+
 
 
 
