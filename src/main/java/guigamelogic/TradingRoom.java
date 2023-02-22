@@ -1,5 +1,6 @@
 package guigamelogic;
 
+import game.GuiLogic;
 import players.Computer;
 import players.Player;
 import stock.Stock;
@@ -11,6 +12,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
@@ -18,6 +21,7 @@ public class TradingRoom {
 
 
     public static void menuOneBuy(int day, String stockSymbol, int numberOfStockPurchased, JTextArea textArea) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+
 
 
         if (!isValidStockSymbol(stockSymbol)) {
@@ -71,7 +75,11 @@ public class TradingRoom {
             playerStockMap.put(playerStock.getSymbol(), playerStockMap.get(playerStock.getSymbol()) + numberOfStockPurchased);
         } else {
             playerStockMap.put(playerStock.getSymbol(), numberOfStockPurchased);
+
+
         }
+
+
 
         playerStocks.add(playerStock.getSymbol());
         player.setStockNames(playerStocks);
