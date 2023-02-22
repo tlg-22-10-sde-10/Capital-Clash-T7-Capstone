@@ -1,5 +1,6 @@
 package guigamelogic;
 
+import game.GuiLogic;
 import players.Computer;
 import players.Player;
 import stock.Stock;
@@ -11,6 +12,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
@@ -20,7 +23,6 @@ public class TradingRoom {
     public static void menuOneBuy(int day, String stockSymbol, int numberOfStockPurchased, JTextArea textArea) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
 
-        GlobalMethodsAndAttributes.initializeGlobalInstances();
 
         if (!isValidStockSymbol(stockSymbol)) {
             showInvalidStockSymbolMessage(day, textArea);
@@ -69,18 +71,28 @@ public class TradingRoom {
     }
 
     private static void purchaseStock(int day, Stock playerStock, int numberOfStockPurchased, JTextArea textArea) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        if (playerStockMap.containsKey(playerStock.getSymbol())) {
+        List<String> stocks = new ArrayList<>(playerStocks);
+        if(playerStockMap.containsKey(playerStock.getSymbol())){
             playerStockMap.put(playerStock.getSymbol(), playerStockMap.get(playerStock.getSymbol()) + numberOfStockPurchased);
-        } else {
-            playerStockMap.put(playerStock.getSymbol(), numberOfStockPurchased);
         }
+        else {
+            playerStockMap.put(playerStock.getSymbol(), numberOfStockPurchased);
+
+
+        }
+
+
 
         playerStocks.add(playerStock.getSymbol());
         player.setStockNames(playerStocks);
         player.setStocks(playerStockMap);
         player.getAccount().deductBalance(numberOfStockPurchased * playerStock.getCurrentPrice());
 
-        showSuccessfulPurchaseMessage(numberOfStockPurchased, playerStock, textArea);
+        //GlobalMethodsAndAttributes.playAudio("cashier.wav.wav");
+        showSuccessfulPurchaseMessage(numberOfStockPurchased,playerStock,textArea);
+
+
+
     }
 
     private static void showSuccessfulPurchaseMessage(int numberOfStockPurchased, Stock playerStock, JTextArea textArea) {

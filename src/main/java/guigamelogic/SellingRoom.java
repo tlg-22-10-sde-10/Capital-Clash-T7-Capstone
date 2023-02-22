@@ -27,16 +27,44 @@ public class SellingRoom {
     }
 
     private static void sellStock(int day, Stock playerStock, int numberOfStockSold, JTextArea text){
-        playerStockMap.put(playerStock.getSymbol(), playerStockMap.get(playerStock.getSymbol())- numberOfStockSold);
+       GlobalMethodsAndAttributes.playerStockMap = player.getStocks();
+       GlobalMethodsAndAttributes.playerStocks = player.getStockNames();
 
-        if(playerStockMap.get(playerStock.getSymbol()) == 0){
-            playerStocks.remove(playerStock.getSymbol());
-        }
+       if(GlobalMethodsAndAttributes.playerStockMap.isEmpty()){
 
-        player.setStockNames(playerStocks);
-        player.setStocks(playerStockMap);
-        player.getAccount().calculateBalance(numberOfStockSold * playerStock.getCurrentPrice());
-        showSuccessfulSaleMessage(numberOfStockSold,playerStock,text);
+       } else {
+           ArrayList<String> playerStocksLists = new ArrayList<String>(GlobalMethodsAndAttributes.playerStockMap.keySet());
+           GlobalMethodsAndAttributes.showHoldings(playerStocksLists);
+
+           while (!GlobalMethodsAndAttributes.playerStockMap.containsKey(playerStock.getSymbol())){
+
+               return;
+           }
+           boolean menuOpen = true;
+
+           while (menuOpen){
+
+               if(GlobalMethodsAndAttributes.playerStockMap.get(playerStock.getSymbol()) >= numberOfStockSold){
+                   player.getAccount().calculateBalance(numberOfStockSold *
+                           inventory.findBySymbol(playerStock.getSymbol()).getCurrentPrice());
+
+                   GlobalMethodsAndAttributes.playerStockMap.put(playerStock.getSymbol(), GlobalMethodsAndAttributes.playerStockMap.get(playerStock.getSymbol()) - numberOfStockSold);
+
+                   if(GlobalMethodsAndAttributes.playerStockMap.get(playerStock.getSymbol()) == 0){
+                       GlobalMethodsAndAttributes.playerStockMap.remove(playerStock.getSymbol());
+                   }
+                   menuOpen = false;
+               }
+               else {
+                   showNotEnoughStockMessage(text);
+               }
+
+           }
+
+       }
+
+       showSuccessfulSaleMessage(numberOfStockSold,playerStock,text);
+
     }
 
     private static boolean hasSufficientStock(Stock playerStock, int numberOfStockSold){
