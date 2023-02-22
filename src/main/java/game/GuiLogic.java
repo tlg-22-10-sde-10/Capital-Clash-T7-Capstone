@@ -12,6 +12,7 @@ import stock.Stock;
 import storage.StockInventory;
 import ui.GlobalMethodsAndAttributes;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -21,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
@@ -382,8 +384,10 @@ public class GuiLogic extends javax.swing.JFrame {
 
     public void bedRoom() {
         //setting the bedroom background
-        bedroomBackground = new ImageIcon("src/main/resources/bedroom.jpg");
+        bedroomBackground = new ImageIcon(loadImage("bedroom.jpg"));
         roomBackgroundImg = new JLabel(bedroomBackground);
+
+
         //setting the buttons for the computer and sleep
         sleep = new JButton();
         playComputer = new JButton();
@@ -412,6 +416,13 @@ public class GuiLogic extends javax.swing.JFrame {
         frame.getContentPane().add(sleep);
         frame.getContentPane().add(playComputer);
 
+
+
+
+
+
+
+
         //commented out for future use
 //        playComputer.addActionListener(new ActionListener() {
 //
@@ -429,18 +440,7 @@ public class GuiLogic extends javax.swing.JFrame {
                 frame.getContentPane().removeAll();
                 frame.repaint();
                 dayCounter++;
-                try {
-                    GlobalMethodsAndAttributes.nextDayOps(dayCounter);
-                } catch (LineUnavailableException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (UnsupportedAudioFileException ex) {
-                    throw new RuntimeException(ex);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-                guiTradingRoom();
+                updateStocks();
                 try {
                     tradingDaysEnd(dayCounter);
                 } catch (InterruptedException ex) {
@@ -452,7 +452,7 @@ public class GuiLogic extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-
+                guiTradingRoom();
             }
         });
     }
@@ -684,7 +684,26 @@ public class GuiLogic extends javax.swing.JFrame {
 
     }
 
+
+    private Image loadImage (String fileName){
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream(fileName)) {
+
+            //noinspection DataFlowIssue
+            return ImageIO.read(input);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
 }
+
+
+
+
+
 
 
 
