@@ -135,21 +135,21 @@ public class GuiLogic extends javax.swing.JFrame {
         newGame = new JButton("New Game");
         quitGame = new JButton("Quit Game");
 
-        newGame.setBounds(130, 420, 105, 40);
+        newGame.setBounds(250, 520, 105, 40);
         newGame.setBackground(Color.GREEN);
 
-        quitGame.setBounds(260, 420, 105, 40);
+        quitGame.setBounds(440, 520, 105, 40);
         quitGame.setBackground(Color.RED);
 
-        gameTitle_CAPITAL.setBounds(100, 20, 300, 50);
-        gameTitle_CAPITAL.setFont(new Font("Playfair Display", Font.BOLD, 40));
+        gameTitle_CAPITAL.setBounds(165, 30, 300, 50);
+        gameTitle_CAPITAL.setFont(new Font("Playfair Display", Font.BOLD, 48));
 
-        gameTitle_CLASH.setBounds(250, 70, 300, 50);
-        gameTitle_CLASH.setFont(new Font("Playfair Display", Font.BOLD, 40));
+        gameTitle_CLASH.setBounds(395, 30, 300, 50);
+        gameTitle_CLASH.setFont(new Font("Playfair Display", Font.BOLD, 48));
         gameTitle_CLASH.setForeground(Color.RED);
 
-        gameTitleText.setBounds(160, 380, 300, 40);
-        gameTitleText.setFont(new Font("Playfair Display", Font.BOLD, 12));
+        gameTitleText.setBounds(290, 480, 300, 40);
+        gameTitleText.setFont(new Font("Playfair Display", Font.BOLD, 14));
 
         frame.getContentPane().add(newGame);
         frame.getContentPane().add(quitGame);
@@ -188,14 +188,19 @@ public class GuiLogic extends javax.swing.JFrame {
         gameStoryText = new JTextArea(GameStory.displayGameInfo());
         scrollPane = new JScrollPane(gameStoryText);
         continueButton = new JButton("Continue");
+        JPanel panel = new JPanel();
 
-        img = new ImageIcon("");
+        img = new ImageIcon("src/main/resources/money-mistakes-300x295.jpg");
         backgroundImg = new JLabel(img);
-        backgroundImg.setBounds(0, 0, 800, 600);
 
-        gameStoryText.setBounds(75, 60, 350, 350);
+        Dimension size = backgroundImg.getPreferredSize();
+        backgroundImg.setBounds(450, 110, size.width, size.height);
+        panel.setLayout(null);
+        panel.add(backgroundImg);
+
+        gameStoryText.setBounds(60, 100, 350, 350);
         gameStoryText.setFont(new Font("Playfair Display", Font.BOLD, 12));
-        gameStoryText.setBackground(new Color(0, 0, 0, 65));
+        gameStoryText.setBackground(new Color(0, 0, 0, 0));
         gameStoryText.setForeground(Color.black);
         gameStoryText.setEditable(false);
         gameStoryText.setLineWrap(true);
@@ -203,10 +208,11 @@ public class GuiLogic extends javax.swing.JFrame {
 
         scrollPane.getViewport().setOpaque(false);
 
-        continueButton.setBounds(130, 420, 105, 40);
+        continueButton.setBounds(650, 500, 105, 40);
+        continueButton.setFont(new Font("Playfair Display", Font.BOLD, 12));
         continueButton.setBackground(Color.GREEN);
 
-        frame.setContentPane(backgroundImg);
+        frame.setContentPane(panel);
         frame.getContentPane().add(gameStoryText);
         frame.getContentPane().add(continueButton);
 
@@ -234,10 +240,10 @@ public class GuiLogic extends javax.swing.JFrame {
         sellStock = new JButton();
         brotherStockHoldings = new JPanel();
         playerStockHoldingsPanel = new JPanel();
-        playerStockHoldingsTextArea = new JTextArea();
-        brotherStockHoldingsTextArea = new JTextArea();
-        timeRemaining = new JLabel(CountdownTimer.getTimeRemaining());
-        tradingTimerPanel = new JPanel();
+        playerStockHoldingsTextArea = new JTextArea(6, 15);
+        brotherStockHoldingsTextArea = new JTextArea(6, 15);
+//        timeRemaining = new JLabel(CountdownTimer.getTimeRemaining());
+//        tradingTimerPanel = new JPanel();
         tradingRoomStockPanel = new JPanel();
         tradingRoomStockPanelTextArea = new JTextArea();
 
@@ -257,37 +263,38 @@ public class GuiLogic extends javax.swing.JFrame {
         welcomeBannerPanelLabel.setText(" Welcome to Trading Day: " + dayCounter);
         welcomeBannerPanelLabel.setForeground(Color.black);
         welcomeBannerPanelLabel.setFont(new Font("Playfair Display", Font.BOLD, 18));
-        welcomeBannerPanelLabel.setBounds(280, 10,800,20);
+        welcomeBannerPanelLabel.setBounds(270, 3,800,20);
 
         //setting the welcome banner location and color
         welcomeBannerPanel.setBounds(0, 0, 800, 25);
         welcomeBannerPanel.setBackground(new Color(0, 0, 0, 0));
 
         //setting the trading timer location and color
-        tradingTimerPanel.setBounds(30, 50, 100, 40);
-        tradingTimerPanel.setBackground(new Color(0, 0, 0, 65));
-        tradingTimerPanel.add(timeRemaining);
+//        tradingTimerPanel.setBounds(30, 30, 100, 40);
+//        tradingTimerPanel.setBackground(new Color(0, 0, 0, 65));
+//        tradingTimerPanel.add(timeRemaining);
 
         //setting time remaining location
-        timeRemaining.setBounds(60,20,100,100);
-        timeRemaining.setBackground(Color.GREEN);
+//        timeRemaining.setBounds(60,2,100,100);
+//        timeRemaining.setForeground(Color.red);
 
         //setting the location end trading day/go to room button
-        endTradingDay.setBounds(620, 50, 150, 40);
+        endTradingDay.setBounds(620, 510, 150, 40);
         endTradingDay.setBackground(Color.GREEN);
         endTradingDay.setText("End Trading Day");
 
         //setting the location of the breaking news header
-        breakingNews.setBounds(330, 100, 300, 50);
+        breakingNews.setBounds(310, 30, 300, 50);
         breakingNews.setText("*** BREAKING NEWS ***");
         breakingNews.setFont(new Font("Playfair Display", Font.BOLD, 14));
+        breakingNews.setForeground(Color.red);
 
         //setting the location of the news ticker
         int newsIndexOfTheDay = RandomNumberForNews.getRandomNumber();
         newsTicker = new JTextArea(" - " + news.getNewsContent(newsIndexOfTheDay));
         newsScrollPane = new JScrollPane(newsTicker);
         newsScrollPane.getViewport().setOpaque(false);
-        newsTicker.setBounds(100, 140, 600, 35);
+        newsTicker.setBounds(100, 70, 600, 35);
         newsTicker.setFont(new Font("Playfair Display", Font.BOLD, 12));
         newsTicker.setBackground(new Color(0, 0, 0, 65));
         newsTicker.setForeground(Color.blue);
@@ -296,18 +303,17 @@ public class GuiLogic extends javax.swing.JFrame {
 
 
         //setting the location and description of the buy stock button
-        buyStock.setBounds(230, 405, 105, 40);
+        buyStock.setBounds(280, 325, 105, 40);
         buyStock.setText("Buy Stock");
         buyStock.setBackground(Color.GREEN);
 
         //setting the location and description of the sell button
-        sellStock.setBounds(450, 405, 105, 40);
+        sellStock.setBounds(410, 325, 105, 40);
         sellStock.setText("Sell Stock");
         sellStock.setBackground(Color.ORANGE);
 
-
         //setting the location of the trading room's stock holdings panel
-        tradingRoomStockPanel.setBounds(145,190,500,200);
+        tradingRoomStockPanel.setBounds(150,110,500,200);
         tradingRoomStockPanel.setBackground(new Color(0,0,0,0));
         tradingRoomStockPanelTextArea.setEditable(false);
         tradingRoomStockPanelTextArea.setVisible(true);
@@ -315,12 +321,12 @@ public class GuiLogic extends javax.swing.JFrame {
         tradingRoomStockPanel.add(TradingRoom.showStockInventory(tradingRoomStockPanelTextArea));
 
         //setting the location of the player's stock holdings panel
-        playerStockHoldingsPanel.setBounds(180,460, 155,85);
+        playerStockHoldingsPanel.setBounds(180,380, 180,100);
         playerStockHoldingsPanel.setBackground(new Color(0, 0, 0, 65));
         playerStockHoldingsPanel.add(TradingRoom.playerReport(dayCounter, player, inventory, playerStockHoldingsTextArea));
 
         //setting the location of the brother's stock holdings panel
-        brotherStockHoldings.setBounds(450,460,155,85);
+        brotherStockHoldings.setBounds(450,380,180,100);
         brotherStockHoldings.setBackground(new Color(0, 0, 0, 65));
         brotherStockHoldings.add(TradingRoom.brotherReport(dayCounter, brother, inventory, brotherStockHoldingsTextArea));
 
@@ -329,8 +335,8 @@ public class GuiLogic extends javax.swing.JFrame {
         frame.getContentPane().add(tradingRoomStockPanel);
         frame.getContentPane().add(welcomeBannerPanel);
         frame.getContentPane().add(welcomeBannerPanelLabel);
-        frame.getContentPane().add(tradingTimerPanel);
-        frame.getContentPane().add(timeRemaining);
+//        frame.getContentPane().add(tradingTimerPanel);
+//        frame.getContentPane().add(timeRemaining);
         frame.getContentPane().add(endTradingDay);
         frame.getContentPane().add(breakingNews);
         frame.getContentPane().add(newsTicker);

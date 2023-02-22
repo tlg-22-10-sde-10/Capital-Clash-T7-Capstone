@@ -101,8 +101,7 @@ public class TradingRoom {
     public static JTextArea showStockInventory(JTextArea buyMenuTextArea) {
 
 
-        String buyOptionTitles = "\n           Stock Name:       " + "  Stock Symbol:       " + "Current Price:       " + "Sector:\n";
-
+        String buyOptionTitles = "\n           Name:       " + "         Symbol:     " + "  Price:       " + "       Sector:\n";
         buyMenuTextArea.append(buyOptionTitles);
 
 
@@ -118,8 +117,8 @@ public class TradingRoom {
             double playerStockBalance = player.getBalanceFromHolding(inventory);
             Object playerStock = player.getStocks() == null ? "Empty" : player.getStocks();
 
-            String playerBalance = "YOU\n" + "Stocks: " + playerStock + "\nCash Balance: $" + (player.getAccount().getCashBalance()) + "\n" + "Stock Balance: $" +
-                    (playerStockBalance) + "\n" + "Net Balance: $" + (player.getAccount().getCashBalance() + playerStockBalance);
+            String playerBalance = "  YOU\n" + "  Stocks: " + playerStock + "\n  Cash Balance: $" + (player.getAccount().getCashBalance()) + "\n" + "  Stock Balance: $" +
+                    (playerStockBalance) + "\n" + "  Net Balance: $" + (playerStockBalance + player.getAccount().getCashBalance());
 
             stockHoldingsTextArea.append(playerBalance);
 
@@ -132,10 +131,10 @@ public class TradingRoom {
         if (brother != null && inventory != null) {
 
             double brotherStockBalance = brother.getBalanceFromHolding(inventory);
-            Object brotherStock = brother.getStocks() == null ? "Empty" : player.getStocks();
+            Object brotherStock = brother.getStocks() == null ? "Empty" : brother.getStocks();
 
-            String brotherBalance = "BROTHER\n" + "Stocks: " + brotherStock + "\nCash Balance: $" + (brother.getAccount().getCashBalance()) + "\n" + "Stock Balance: $" +
-                    (brotherStockBalance) + "\n" + "Net Balance: $" + (brother.getAccount().getCashBalance() + brotherStockBalance);
+            String brotherBalance = "  BROTHER\n" + "  Stocks: " + brotherStock + "\n  Cash Balance: $" + (brother.getAccount().getCashBalance()) + "\n" + "  Stock Balance: $" +
+                    (brotherStockBalance) + "\n" + "  Net Balance: $" + (brotherStockBalance + brother.getAccount().getCashBalance());
 
             stockHoldingsTextArea.append(brotherBalance);
         }
