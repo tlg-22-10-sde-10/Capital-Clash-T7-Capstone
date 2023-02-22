@@ -4,9 +4,11 @@ import guigamelogic.CountdownTimer;
 import guigamelogic.GameStory;
 import guigamelogic.SellingRoom;
 import guigamelogic.TradingRoom;
+import marketreturn.MarketReturnGenerator;
 import players.Computer;
 import players.Player;
 import random.RandomNumberForNews;
+import stock.Stock;
 import storage.StockInventory;
 import ui.GlobalMethodsAndAttributes;
 
@@ -26,6 +28,9 @@ import static ui.GlobalMethodsAndAttributes.*;
 public class GuiLogic extends javax.swing.JFrame {
 
     private static final JFrame frame = new GuiConstructor();
+    MarketReturnGenerator mkt = new MarketReturnGenerator();
+    private int newsIndexOfTheDay = RandomNumberForNews.getRandomNumber();
+    private double marketReturn;
 
     // Game Buttons
     private JButton newGame;
@@ -283,7 +288,7 @@ public class GuiLogic extends javax.swing.JFrame {
         breakingNews.setFont(new Font("Playfair Display", Font.BOLD, 14));
 
         //setting the location of the news ticker
-        int newsIndexOfTheDay = RandomNumberForNews.getRandomNumber();
+        // int newsIndexOfTheDay = RandomNumberForNews.getRandomNumber();
         newsTicker = new JTextArea(" - " + news.getNewsContent(newsIndexOfTheDay));
         newsScrollPane = new JScrollPane(newsTicker);
         newsScrollPane.getViewport().setOpaque(false);
@@ -600,6 +605,18 @@ public class GuiLogic extends javax.swing.JFrame {
 
             }
         });
+
+    }
+
+    public void updateStocks(){
+        int newIndex = newsIndexOfTheDay;
+        double mktReturn = mkt.nextMarketReturn(newIndex);
+
+        for(Stock stock : inventory.getAllStocks()){
+            double nextPrice = stock.UpdateStockPriceForTheDay(stock.getCurrentPrice(),
+                    mktReturn,newIndex);
+            stock.setCurrentPrice(nextPrice);
+        }
 
     }
 
