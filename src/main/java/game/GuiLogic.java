@@ -13,14 +13,14 @@ import storage.StockInventory;
 import ui.GlobalMethodsAndAttributes;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -103,6 +103,10 @@ public class GuiLogic extends javax.swing.JFrame {
     private JFrame buyMenuPopup;
     private JFrame sellMenuPopup;
 
+    //Clip for music
+    private static Clip backgroundMusicClip;
+    private static Clip soundEffectClip;
+
     public static int getDayCounter() {
         return dayCounter;
     }
@@ -171,7 +175,15 @@ public class GuiLogic extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
                 frame.repaint();
-                guiGameStory();
+                try {
+                    guiGameStory();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -191,7 +203,12 @@ public class GuiLogic extends javax.swing.JFrame {
         });
     }
 
-    public void guiGameStory() {
+    public void guiGameStory() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        if (backgroundMusicClip != null) {
+            backgroundMusicClip.stop();
+        }
+        backgroundMusicClip = openAudioClip("gui_game_music.wav");
+        backgroundMusicClip.loop(99);
 
         newGame.setVisible(false);
         gameStoryText = new JTextArea(GameStory.displayGameInfo());
@@ -234,12 +251,43 @@ public class GuiLogic extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
                 frame.repaint();
-                guiTradingRoom();
+
+                //starts the music once enters the room
+                if (backgroundMusicClip != null) {
+                    backgroundMusicClip.stop();
+                }
+                try {
+                    backgroundMusicClip = openAudioClip("trading_room_background.wav");
+                    // Get the FloatControl object for controlling the volume
+                    FloatControl gainControl = (FloatControl) backgroundMusicClip.getControl(FloatControl.Type.MASTER_GAIN);
+
+                    // Set the volume to a lower level (in dB)
+                    gainControl.setValue(-15.0f); // reduce volume by 10 dB
+
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                }
+                backgroundMusicClip.loop(99);
+
+
+                try {
+                    guiTradingRoom();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }
 
-    public void guiTradingRoom() {
+    public void guiTradingRoom() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
         continueButton.setVisible(false);
 
@@ -257,6 +305,11 @@ public class GuiLogic extends javax.swing.JFrame {
         tradingRoomStockPanel = new JPanel();
         tradingRoomStockPanelTextArea = new JTextArea();
 
+
+        //start trading for the day
+        //Executor to call method constantly? For time remaining portion
+        CountdownTimer.startTimer(5);
+
         //changes the background image
         tradingRoomBackground = new ImageIcon();
         backgroundImg = new JLabel(tradingRoomBackground);
@@ -273,6 +326,15 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting the welcome banner location and color
         welcomeBannerPanel.setBounds(0, 0, 800, 25);
         welcomeBannerPanel.setBackground(new Color(0, 0, 0, 0));
+
+        //setting the trading timer location and color
+//        tradingTimerPanel.setBounds(30, 30, 100, 40);
+//        tradingTimerPanel.setBackground(new Color(0, 0, 0, 65));
+//        tradingTimerPanel.add(timeRemaining);
+
+        //setting time remaining location
+//        timeRemaining.setBounds(60,2,100,100);
+//        timeRemaining.setForeground(Color.red);
 
         //setting the location end trading day/go to room button
         endTradingDay.setBounds(620, 510, 150, 40);
@@ -296,6 +358,7 @@ public class GuiLogic extends javax.swing.JFrame {
         newsTicker.setForeground(Color.blue);
         newsTicker.setEditable(false);
         newsTicker.setLineWrap(true);
+
 
         //setting the location and description of the buy stock button
         buyStock.setBounds(280, 325, 105, 40);
@@ -330,6 +393,8 @@ public class GuiLogic extends javax.swing.JFrame {
         frame.getContentPane().add(tradingRoomStockPanel);
         frame.getContentPane().add(welcomeBannerPanel);
         frame.getContentPane().add(welcomeBannerPanelLabel);
+//        frame.getContentPane().add(tradingTimerPanel);
+//        frame.getContentPane().add(timeRemaining);
         frame.getContentPane().add(endTradingDay);
         frame.getContentPane().add(breakingNews);
         frame.getContentPane().add(newsTicker);
@@ -362,12 +427,20 @@ public class GuiLogic extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
                 frame.repaint();
-                bedRoom();
+                try {
+                    bedRoom();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }
 
-    public void bedRoom() {
+    public void bedRoom() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         //setting the bedroom background
         bedroomBackground = new ImageIcon(loadImage("bedroom.jpg"));
         roomBackgroundImg = new JLabel(bedroomBackground);
@@ -376,6 +449,14 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting the buttons for the computer and sleep
         sleep = new JButton();
         playComputer = new JButton();
+
+        backgroundMusicClip.stop();
+        if (soundEffectClip != null) {
+            soundEffectClip.stop();
+        }
+        soundEffectClip = openAudioClip("door_closing.wav");
+        soundEffectClip.start();
+
 
 
         //setting the descriptions for the sleep button
@@ -430,7 +511,40 @@ public class GuiLogic extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                guiTradingRoom();
+                soundEffectClip.stop();
+                //starts the music once enters the room
+                if (backgroundMusicClip != null) {
+                    backgroundMusicClip.stop();
+                }
+                try {
+                    backgroundMusicClip = openAudioClip("trading_room_background.wav");
+
+                    // Get the FloatControl object for controlling the volume
+                    FloatControl gainControl = (FloatControl) backgroundMusicClip.getControl(FloatControl.Type.MASTER_GAIN);
+
+                    // Set the volume to a lower level (in dB)
+                    gainControl.setValue(-15.0f); // reduce volume by 10 dB
+
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                }
+                backgroundMusicClip.loop(99);
+
+
+
+                try {
+                    guiTradingRoom();
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }
@@ -517,6 +631,11 @@ public class GuiLogic extends javax.swing.JFrame {
                     TradingRoom.menuOneBuy(dayCounter, stockBought, stockQuant, insufficientBuyBalance);
                     JOptionPane.showMessageDialog(null,insufficientBuyBalance);
                     TradingRoom.playerReport(dayCounter, player, inventory, tradingRoomStockPanelTextArea);
+                    if (soundEffectClip != null) {
+                        soundEffectClip.stop();
+                    }
+                    soundEffectClip = openAudioClip("cashier.wav.wav");
+                    soundEffectClip.start();
                     guiTradingRoom();
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                     throw new RuntimeException(ex);
@@ -610,8 +729,17 @@ public class GuiLogic extends javax.swing.JFrame {
                     SellingRoom.menuTwoSell(dayCounter,stockSold, Integer.parseInt(stockQuantity),insufficientBuyBalance);
                     JOptionPane.showMessageDialog(null,insufficientBuyBalance);
                     sellMenuPopup.dispose();
+                    if (soundEffectClip != null) {
+                        soundEffectClip.stop();
+                    }
+                    soundEffectClip = openAudioClip("sell.wav");
+                    soundEffectClip.start();
                     guiTradingRoom();
                 } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (UnsupportedAudioFileException ex) {
+                    throw new RuntimeException(ex);
+                } catch (LineUnavailableException ex) {
                     throw new RuntimeException(ex);
                 }
 
@@ -631,16 +759,33 @@ public class GuiLogic extends javax.swing.JFrame {
             totalBrotherBalance += calculatePriceFromMap(brotherStockMap);
 
             if (totalPlayerBalance > totalBrotherBalance) {
-
+                backgroundMusicClip.stop();
+                if (soundEffectClip != null) {
+                    soundEffectClip.stop();
+                }
+                soundEffectClip = openAudioClip("piglevelwin2mp3-14800.wav");
+                soundEffectClip.start();
                 JOptionPane.showInternalMessageDialog(null, "You WIN, The Company is yours! \n " + "Your final balance total is $" + String.format("%.02f",totalPlayerBalance) + "\n" + "Your brother's final balance is $" + String.format("%.02f", totalBrotherBalance));
-                GlobalMethodsAndAttributes.playAudio("piglevelwin2mp3-14800.wav");
                 frame.dispose();
+
             } else if (totalPlayerBalance < totalBrotherBalance) {
+                backgroundMusicClip.stop();
+                if (soundEffectClip != null) {
+                    soundEffectClip.stop();
+                }
+                soundEffectClip = openAudioClip("sadTrombone(1).wav");
+                soundEffectClip.start();
                 JOptionPane.showInternalMessageDialog(null, "You LOSE, the future CEO is your brother! \n" + "Your final balance total is $" + String.format("%.02f",totalPlayerBalance) + "\n" + "Your brother's final balance is $" + String.format("%.02f", totalBrotherBalance));
                 GlobalMethodsAndAttributes.playAudio("sadTrombone(1).wav");
                 frame.dispose();
 
             } else {
+                backgroundMusicClip.stop();
+                if (soundEffectClip != null) {
+                    soundEffectClip.stop();
+                }
+                soundEffectClip = openAudioClip("sadTrombone(1).wav");
+                soundEffectClip.start();
                 JOptionPane.showInternalMessageDialog(null, "You tied with your brother? Your father decided to keep the company... \n" + "Your final balance total is $" + String.format("%.02f",totalPlayerBalance) + "\n" + "Your brother's final balance is $" + String.format("%.02f", totalBrotherBalance));
                 frame.dispose();
             }
@@ -648,6 +793,7 @@ public class GuiLogic extends javax.swing.JFrame {
         } else if (dayCounter == 4) {
             JOptionPane.showInternalMessageDialog(null, "Tomorrow is your last day of trading, make it count!");
         }
+        backgroundMusicClip.stop();
     }
 
     public void updateStocks(){
@@ -672,8 +818,17 @@ public class GuiLogic extends javax.swing.JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
 
+    private static Clip openAudioClip(String clipname) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        InputStream inputStream = GuiLogic.class.getClassLoader().getResourceAsStream(clipname);
+        //noinspection ConstantConditions
+        InputStream buffer = new BufferedInputStream(inputStream);
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(buffer);
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        return clip;
     }
 
 }

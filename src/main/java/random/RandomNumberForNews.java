@@ -6,8 +6,6 @@ import java.util.Set;
 
 public class RandomNumberForNews {
 
-
-
     private static Set<Integer> shownNews = new HashSet<>();
     private static final int RANGE = 10;
     private static final Random RANDOM = new Random();
