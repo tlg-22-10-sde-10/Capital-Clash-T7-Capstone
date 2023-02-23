@@ -18,6 +18,8 @@ class ComputerTest {
     ComputerTest() throws FileNotFoundException {
     }
 
+
+
     @Test
     public void testGetBalanceFromHolding() {
         playerStockMap = new HashMap<>(){{
@@ -32,4 +34,8 @@ class ComputerTest {
         assertEquals(expectedBalance,actualBalance);
 
     }
+
+
+
+
 }
