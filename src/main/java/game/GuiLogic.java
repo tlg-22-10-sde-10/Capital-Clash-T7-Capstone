@@ -625,7 +625,7 @@ public class GuiLogic extends javax.swing.JFrame {
         submitSellStockMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String stockSold = stockSellSymbol.getText();
+                String stockSold = stockSellSymbol.getText().toUpperCase();
                 String stockQuantity = stockSellQuantity.getText();
 
                 try {
