@@ -78,7 +78,7 @@ public class SellingRoom {
     }
 
     private static void showNotEnoughStockMessage(JTextArea jTextArea){
-        jTextArea.append("***UnAuthiroized sale! Not Enough Stock!***\n");
+        jTextArea.append("***UnAuthorized sale! Not Enough Stock!***\n");
     }
 
     private static boolean isValidStockSymbol(String stockSymbol){
@@ -88,15 +88,12 @@ public class SellingRoom {
 
     public static JTextArea showPlayerHoldings(JTextArea sellMenuTextArea) {
 
-        String sellPageTitle = "       YOUR HOLDINGS\n      ";
-        String sellOptionTitles = "\nStock Symbol:       " + "Quantity:\n";
-
-        sellMenuTextArea.append(sellPageTitle);
-        sellMenuTextArea.append(sellOptionTitles);
+        sellMenuTextArea.append(String.format("%-15s%-20s\n","", "         YOUR HOLDINGS      "));
+        sellMenuTextArea.append(String.format("%-15s%-20s%-15s\n","", "Stock Symbol", "Quantity"));
 
         for (String playerStock : playerStocks) {
-            sellMenuTextArea.append(playerStock + "                   " +
-                    playerStockMap.get(playerStock));
+            sellMenuTextArea.append(String.format("%-15s%-20s%15s\n","", playerStock,
+                    playerStockMap.get(playerStock)));
         }
         return sellMenuTextArea;
     }
