@@ -198,8 +198,12 @@ public class GuiLogic extends javax.swing.JFrame {
         continueButton = new JButton("Continue");
         JPanel panel = new JPanel();
 
-        img = new ImageIcon("src/main/resources/money-mistakes-300x295.jpg");
+        img = new ImageIcon(loadImage("money-mistakes-300x295.jpg"));
         backgroundImg = new JLabel(img);
+
+//
+//        bedroomBackground = new ImageIcon(loadImage("bedroom.jpg"));
+//        roomBackgroundImg = new JLabel(bedroomBackground);
 
         Dimension size = backgroundImg.getPreferredSize();
         backgroundImg.setBounds(450, 110, size.width, size.height);
@@ -415,13 +419,6 @@ public class GuiLogic extends javax.swing.JFrame {
         frame.setContentPane(roomBackgroundImg);
         frame.getContentPane().add(sleep);
         frame.getContentPane().add(playComputer);
-
-
-
-
-
-
-
 
         //commented out for future use
 //        playComputer.addActionListener(new ActionListener() {
