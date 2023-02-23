@@ -23,7 +23,6 @@ public class TradingRoom {
     public static void menuOneBuy(int day, String stockSymbol, int numberOfStockPurchased, JTextArea textArea) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
 
-
         if (!isValidStockSymbol(stockSymbol)) {
             showInvalidStockSymbolMessage(day, textArea);
             stockSymbol = promptForValidStockSymbol(day, textArea, stockSymbol);

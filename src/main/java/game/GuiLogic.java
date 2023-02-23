@@ -654,16 +654,16 @@ public class GuiLogic extends javax.swing.JFrame {
 
             if (totalPlayerBalance > totalBrotherBalance) {
 
-                JOptionPane.showInternalMessageDialog(null, "You WIN, The Company is yours!");
+                JOptionPane.showInternalMessageDialog(null, "You WIN, The Company is yours! \n " + "Your final balance total is $" + String.format("%.02f",totalPlayerBalance) + "\n" + "Your brother's final balance is $" + String.format("%.02f", totalBrotherBalance));
                 GlobalMethodsAndAttributes.playAudio("piglevelwin2mp3-14800.wav");
                 frame.dispose();
             } else if (totalPlayerBalance < totalBrotherBalance) {
-                JOptionPane.showInternalMessageDialog(null, "You LOSE, the future CEO is your brother");
+                JOptionPane.showInternalMessageDialog(null, "You LOSE, the future CEO is your brother! \n" + "Your final balance total is $" + String.format("%.02f",totalPlayerBalance) + "\n" + "Your brother's final balance is $" + String.format("%.02f", totalBrotherBalance));
                 GlobalMethodsAndAttributes.playAudio("sadTrombone(1).wav");
                 frame.dispose();
 
             } else {
-                JOptionPane.showInternalMessageDialog(null, "You tied with your brother? Your father decided to keep the company...");
+                JOptionPane.showInternalMessageDialog(null, "You tied with your brother? Your father decided to keep the company... \n" + "Your final balance total is $" + String.format("%.02f",totalPlayerBalance) + "\n" + "Your brother's final balance is $" + String.format("%.02f", totalBrotherBalance));
                 frame.dispose();
             }
 
