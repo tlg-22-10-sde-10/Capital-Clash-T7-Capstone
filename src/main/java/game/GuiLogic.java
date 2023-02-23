@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -201,9 +202,6 @@ public class GuiLogic extends javax.swing.JFrame {
         img = new ImageIcon(loadImage("money-mistakes-300x295.jpg"));
         backgroundImg = new JLabel(img);
 
-//
-//        bedroomBackground = new ImageIcon(loadImage("bedroom.jpg"));
-//        roomBackgroundImg = new JLabel(bedroomBackground);
 
         Dimension size = backgroundImg.getPreferredSize();
         backgroundImg.setBounds(450, 110, size.width, size.height);
@@ -265,8 +263,14 @@ public class GuiLogic extends javax.swing.JFrame {
         CountdownTimer.startTimer(5);
 
         //changes the background image
-        tradingRoomBackground = new ImageIcon("");
-        backgroundImg = new JLabel(tradingRoomBackground);
+//      tradingRoomBackground = new ImageIcon();
+//      backgroundImg = new JLabel(tradingRoomBackground);
+
+
+        //create line factory border
+        Border border = BorderFactory.createLineBorder(Color.BLUE,5);
+        backgroundImg = new JLabel();
+        backgroundImg.setBorder(border);
 
         //setting the background picture and location
         backgroundImg.setBounds(0, 0, 800, 600);
@@ -335,10 +339,12 @@ public class GuiLogic extends javax.swing.JFrame {
         //setting the location of the player's stock holdings panel
         playerStockHoldingsPanel.setBounds(90,380, 300,100);
         playerStockHoldingsPanel.add(TradingRoom.playerReport(dayCounter, player, inventory, playerStockHoldingsTextArea));
+        playerStockHoldingsPanel.setBorder(border);
 
         //setting the location of the brother's stock holdings panel
         brotherStockHoldings.setBounds(400,380,300,100);
         brotherStockHoldings.add(TradingRoom.brotherReport(dayCounter, brother, inventory, brotherStockHoldingsTextArea));
+        brotherStockHoldings.setBorder(border);
 
         //adding the elements to the frame
         frame.setContentPane(backgroundImg);
