@@ -252,8 +252,8 @@ public class GuiLogic extends javax.swing.JFrame {
         sellStock = new JButton();
         brotherStockHoldings = new JPanel();
         playerStockHoldingsPanel = new JPanel();
-        playerStockHoldingsTextArea = new JTextArea(6, 15);
-        brotherStockHoldingsTextArea = new JTextArea(6, 15);
+        playerStockHoldingsTextArea = new JTextArea(6, 28);
+        brotherStockHoldingsTextArea = new JTextArea(6, 28);
 //        timeRemaining = new JLabel(CountdownTimer.getTimeRemaining());
 //        tradingTimerPanel = new JPanel();
         tradingRoomStockPanel = new JPanel();
@@ -333,13 +333,11 @@ public class GuiLogic extends javax.swing.JFrame {
         tradingRoomStockPanel.add(TradingRoom.showStockInventory(tradingRoomStockPanelTextArea));
 
         //setting the location of the player's stock holdings panel
-        playerStockHoldingsPanel.setBounds(180,380, 180,100);
-        playerStockHoldingsPanel.setBackground(new Color(0, 0, 0, 65));
+        playerStockHoldingsPanel.setBounds(90,380, 300,100);
         playerStockHoldingsPanel.add(TradingRoom.playerReport(dayCounter, player, inventory, playerStockHoldingsTextArea));
 
         //setting the location of the brother's stock holdings panel
-        brotherStockHoldings.setBounds(450,380,180,100);
-        brotherStockHoldings.setBackground(new Color(0, 0, 0, 65));
+        brotherStockHoldings.setBounds(400,380,300,100);
         brotherStockHoldings.add(TradingRoom.brotherReport(dayCounter, brother, inventory, brotherStockHoldingsTextArea));
 
         //adding the elements to the frame
