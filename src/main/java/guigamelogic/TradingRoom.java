@@ -123,8 +123,8 @@ public class TradingRoom {
             double playerStockBalance = player.getBalanceFromHolding(inventory);
             Object playerStock = player.getStocks() == null ? "Empty" : player.getStocks();
 
-            String playerBalance = "  YOU\n" + "  Stocks: " + playerStock + "\n  Cash Balance: $" + (player.getAccount().getCashBalance()) + "\n" + "  Stock Balance: $" +
-                    (playerStockBalance) + "\n" + "  Net Balance: $" + (playerStockBalance + player.getAccount().getCashBalance());
+            String playerBalance = "  YOU\n" + "  Stocks: " + playerStock + "\n  Cash Balance: $" + String.format("%.02f", player.getAccount().getCashBalance()) + "\n" + "  Stock Balance: $" +
+                    String.format("%.02f", playerStockBalance) + "\n" + "  Net Balance: $" + String.format("%.02f", playerStockBalance + player.getAccount().getCashBalance());
 
             stockHoldingsTextArea.append(playerBalance);
 
@@ -139,8 +139,8 @@ public class TradingRoom {
             double brotherStockBalance = brother.getBalanceFromHolding(inventory);
             Object brotherStock = brother.getStocks() == null ? "Empty" : brother.getStocks();
 
-            String brotherBalance = "  BROTHER\n" + "  Stocks: " + brotherStock + "\n  Cash Balance: $" + (brother.getAccount().getCashBalance()) + "\n" + "  Stock Balance: $" +
-                    (brotherStockBalance) + "\n" + "  Net Balance: $" + (brotherStockBalance + brother.getAccount().getCashBalance());
+            String brotherBalance = "  BROTHER\n" + "  Stocks: " + brotherStock + "\n  Cash Balance: $" + String.format("%.02f", brother.getAccount().getCashBalance()) + "\n" + "  Stock Balance: $" +
+                    String.format("%.02f", brotherStockBalance) + "\n" + "  Net Balance: $" + String.format("%.02f", brotherStockBalance + brother.getAccount().getCashBalance());
 
             stockHoldingsTextArea.append(brotherBalance);
         }
