@@ -5,11 +5,13 @@ import players.Computer;
 import players.Player;
 import stock.Stock;
 import storage.StockInventory;
+import storage.StockType;
 import ui.GlobalMethodsAndAttributes;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,17 +104,15 @@ public class TradingRoom {
 
     }
 
-
     public static JTextArea showStockInventory(JTextArea buyMenuTextArea) {
 
-
-        String buyOptionTitles = "\n           Name:       " + "         Symbol:     " + "  Price:       " + "       Sector:\n";
-        buyMenuTextArea.append(buyOptionTitles);
-
+        buyMenuTextArea.append(String.format("%-10s %-20s %-15s %-18s %-11s","",
+                "Stock Name", "Symbol", "Current Price", "Sector"));
 
         for (Stock stock : inventory.getAllStocks()) {
-            buyMenuTextArea.append(stock.toString() + "\n");
+            buyMenuTextArea.append("\n" + stock.toString());
         }
+
         return buyMenuTextArea;
     }
 
@@ -145,5 +145,29 @@ public class TradingRoom {
         }
         return stockHoldingsTextArea;
     }
+
+    public static JTable showStocks(){
+        String[] cols = {"Stock Name", "Symbol", "Current Price", "Sector"};
+        DefaultTableModel tableModel = new DefaultTableModel(cols,0);
+        JTable stocks = new JTable(tableModel);
+        List<Stock> stocksList = inventory.getAllStocks();
+
+        for(int i = 0; i < stocksList.size(); i++){
+            String stockName = stocksList.get(i).getStockName();
+            String symbol = stocksList.get(i).getSymbol();
+            double curPrice = stocksList.get(i).getCurrentPrice();
+            StockType stockType = stocksList.get(i).getSector();
+
+            Object[] data = {stockName,symbol,curPrice,stockType};
+            tableModel.addRow(data);
+        }
+        stocks.getColumnModel().getColumn(0).setPreferredWidth(150);
+        stocks.getColumnModel().getColumn(1).setPreferredWidth(100);
+        stocks.getColumnModel().getColumn(2).setPreferredWidth(100);
+        stocks.getColumnModel().getColumn(3).setPreferredWidth(180);
+        return stocks;
+    }
+
+
 
 }

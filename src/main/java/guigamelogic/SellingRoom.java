@@ -1,11 +1,14 @@
 package guigamelogic;
 
 import stock.Stock;
+import storage.StockType;
 import ui.GlobalMethodsAndAttributes;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
@@ -86,16 +89,34 @@ public class SellingRoom {
     }
 
 
-    public static JTextArea showPlayerHoldings(JTextArea sellMenuTextArea) {
+//    public static JTextArea showPlayerHoldings(JTextArea sellMenuTextArea) {
+//
+//        sellMenuTextArea.append(String.format("%-15s%-20s\n","", "         YOUR HOLDINGS      "));
+//        sellMenuTextArea.append(String.format("%-15s%-20s%-15s\n","", "Stock Symbol", "Quantity"));
+//
+//        for (String playerStock : playerStocks) {
+//            sellMenuTextArea.append(String.format("%-15s%-20s%15s\n","", playerStock,
+//                    playerStockMap.get(playerStock)));
+//        }
+//        return sellMenuTextArea;
+//    }
 
-        sellMenuTextArea.append(String.format("%-15s%-20s\n","", "         YOUR HOLDINGS      "));
-        sellMenuTextArea.append(String.format("%-15s%-20s%-15s\n","", "Stock Symbol", "Quantity"));
 
-        for (String playerStock : playerStocks) {
-            sellMenuTextArea.append(String.format("%-15s%-20s%15s\n","", playerStock,
-                    playerStockMap.get(playerStock)));
+    public static JTable showPlayerHoldings(){
+        String[] cols = {"Stock Name", "Quantity"};
+        DefaultTableModel tableModel = new DefaultTableModel(cols,0);
+        JTable stocks = new JTable(tableModel);
+        List<String> stocksList = playerStocks;
+
+        for(int i = 0; i < stocksList.size(); i++){
+            String symbol = stocksList.get(i);
+            int quantity = playerStockMap.get(symbol);
+
+            Object[] data = {symbol, quantity};
+            tableModel.addRow(data);
         }
-        return sellMenuTextArea;
+
+        return stocks;
     }
 
 

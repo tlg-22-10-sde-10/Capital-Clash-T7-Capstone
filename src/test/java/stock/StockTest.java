@@ -102,8 +102,8 @@ public class StockTest {
 
     @Test
     void setSector() {
-        StockType newStockType = StockType.Communication_Services;
-        stock.setSector(StockType.Communication_Services);
+        StockType newStockType = StockType.CommunicationServices;
+        stock.setSector(StockType.CommunicationServices);
         assertEquals(newStockType, stock.getSector());
     }
 
