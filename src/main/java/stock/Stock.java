@@ -83,9 +83,8 @@ public class Stock {
     }
 
     public String toString() {
-        String result = String.format("%-10s %-20s %-15s %-18s %-11s","",
+        return String.format("%-10s %-20s %-15s %-18s%-11s","",
                 getStockName(), getSymbol(), getCurrentPrice(), getSector());
-        return result;
     }
 
     // price calculator based on the day

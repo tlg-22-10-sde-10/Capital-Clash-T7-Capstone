@@ -17,6 +17,7 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,7 @@ import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
@@ -371,8 +373,9 @@ public class GuiLogic extends javax.swing.JFrame {
         sellStock.setBackground(Color.ORANGE);
 
         //setting the location of the trading room's stock holdings panel
-        tradingRoomStockPanel.setBounds(150,110,500,200);
+        tradingRoomStockPanel.setBounds(150,120,500,180);
         tradingRoomStockPanel.setBackground(new Color(0,0,0,0));
+        tradingRoomStockPanel.setBorder(border);
         tradingRoomStockPanelTextArea.setEditable(false);
         tradingRoomStockPanelTextArea.setVisible(true);
         tradingRoomStockPanelTextArea.setSize(500,200);
@@ -393,8 +396,6 @@ public class GuiLogic extends javax.swing.JFrame {
         frame.getContentPane().add(tradingRoomStockPanel);
         frame.getContentPane().add(welcomeBannerPanel);
         frame.getContentPane().add(welcomeBannerPanelLabel);
-//        frame.getContentPane().add(tradingTimerPanel);
-//        frame.getContentPane().add(timeRemaining);
         frame.getContentPane().add(endTradingDay);
         frame.getContentPane().add(breakingNews);
         frame.getContentPane().add(newsTicker);
