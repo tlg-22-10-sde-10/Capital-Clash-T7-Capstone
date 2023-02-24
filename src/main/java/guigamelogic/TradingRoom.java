@@ -146,9 +146,11 @@ public class TradingRoom {
         return stockHoldingsTextArea;
     }
 
-    public JTable showStocks(){
+    public static JTable showStocks(){
+
         String[] cols = {"Stock Name", "Symbol", "Current Price", "Sector"};
         DefaultTableModel tableModel = new DefaultTableModel(cols,0);
+        JTable stocks = new JTable(tableModel);
         List<Stock> stocksList = inventory.getAllStocks();
         for(int i = 0; i < stocksList.size(); i++){
             String stockName = stocksList.get(i).getStockName();
@@ -159,8 +161,11 @@ public class TradingRoom {
             Object[] data = {stockName,symbol,curPrice,stockType};
             tableModel.addRow(data);
         }
-
-        return new JTable(tableModel);
+        stocks.getColumnModel().getColumn(0).setPreferredWidth(150);
+        stocks.getColumnModel().getColumn(1).setPreferredWidth(100);
+        stocks.getColumnModel().getColumn(2).setPreferredWidth(100);
+        stocks.getColumnModel().getColumn(3).setPreferredWidth(180);
+        return stocks;
     }
 
 

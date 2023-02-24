@@ -60,7 +60,6 @@ public class GuiLogic extends javax.swing.JFrame {
     private JLabel sellMenuBackgroundImg;
     private JLabel breakingNews;
     private JLabel roomBackgroundImg;
-    private JLabel timeRemaining;
 
     private JLabel stockPurchaseHeading;
     private JLabel stockPurchaseQuantityHeading;
@@ -69,7 +68,6 @@ public class GuiLogic extends javax.swing.JFrame {
 
     //Game Panels
     private JPanel welcomeBannerPanel;
-    //private JPanel tradingTimerPanel;
     private JTextArea newsTicker;
     private JScrollPane newsScrollPane;
     private JPanel buyMenuStocksPanel;
@@ -85,7 +83,6 @@ public class GuiLogic extends javax.swing.JFrame {
     private JTextArea brotherStockHoldingsTextArea;
     private JTextArea insufficientBuyBalance;
     private JScrollPane scrollPane;
-    private JScrollPane tradingRoomStockPanelScrollPane;
     private JTextArea buyMenuStocksListing;
     private JTextArea sellMenuStocksListing;
     private JTextField stockBuySymbol;
@@ -307,11 +304,6 @@ public class GuiLogic extends javax.swing.JFrame {
         tradingRoomStockPanel = new JPanel();
         tradingRoomStockPanelTextArea = new JTextArea();
 
-
-        //start trading for the day
-        //Executor to call method constantly? For time remaining portion
-        CountdownTimer.startTimer(5);
-
         //changes the background image
         tradingRoomBackground = new ImageIcon();
         backgroundImg = new JLabel(tradingRoomBackground);
@@ -329,22 +321,13 @@ public class GuiLogic extends javax.swing.JFrame {
         welcomeBannerPanel.setBounds(0, 0, 800, 25);
         welcomeBannerPanel.setBackground(new Color(0, 0, 0, 0));
 
-        //setting the trading timer location and color
-//        tradingTimerPanel.setBounds(30, 30, 100, 40);
-//        tradingTimerPanel.setBackground(new Color(0, 0, 0, 65));
-//        tradingTimerPanel.add(timeRemaining);
-
-        //setting time remaining location
-//        timeRemaining.setBounds(60,2,100,100);
-//        timeRemaining.setForeground(Color.red);
-
         //setting the location end trading day/go to room button
         endTradingDay.setBounds(620, 510, 150, 40);
         endTradingDay.setBackground(Color.GREEN);
         endTradingDay.setText("End Trading Day");
 
         //setting the location of the breaking news header
-        breakingNews.setBounds(310, 30, 300, 50);
+        breakingNews.setBounds(310, 20, 300, 50);
         breakingNews.setText("*** BREAKING NEWS ***");
         breakingNews.setFont(new Font("Playfair Display", Font.BOLD, 14));
         breakingNews.setForeground(Color.red);
@@ -354,7 +337,7 @@ public class GuiLogic extends javax.swing.JFrame {
         newsTicker = new JTextArea(" - " + news.getNewsContent(newsIndexOfTheDay));
         newsScrollPane = new JScrollPane(newsTicker);
         newsScrollPane.getViewport().setOpaque(false);
-        newsTicker.setBounds(100, 70, 600, 35);
+        newsTicker.setBounds(100, 65, 600, 35);
         newsTicker.setFont(new Font("Playfair Display", Font.BOLD, 12));
         newsTicker.setBackground(new Color(0, 0, 0, 65));
         newsTicker.setForeground(Color.blue);
@@ -372,14 +355,14 @@ public class GuiLogic extends javax.swing.JFrame {
         sellStock.setText("Sell Stock");
         sellStock.setBackground(Color.ORANGE);
 
+
         //setting the location of the trading room's stock holdings panel
-        tradingRoomStockPanel.setBounds(150,120,500,180);
+        JTable table = TradingRoom.showStocks();
+        tradingRoomStockPanel.setBounds(120,110,560,200);
         tradingRoomStockPanel.setBackground(new Color(0,0,0,0));
         tradingRoomStockPanel.setBorder(border);
-        tradingRoomStockPanelTextArea.setEditable(false);
-        tradingRoomStockPanelTextArea.setVisible(true);
-        tradingRoomStockPanelTextArea.setSize(500,200);
-        tradingRoomStockPanel.add(TradingRoom.showStockInventory(tradingRoomStockPanelTextArea));
+        tradingRoomStockPanel.add(table.getTableHeader(), BorderLayout.NORTH);
+        tradingRoomStockPanel.add(table, BorderLayout.CENTER);
 
         //setting the location of the player's stock holdings panel
         playerStockHoldingsPanel.setBounds(70,380, 320,100);
@@ -581,9 +564,11 @@ public class GuiLogic extends javax.swing.JFrame {
         buyMenuPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //setting buy menu stock listing location
+        JTable buyMenuPopupTable = TradingRoom.showStocks();
         buyMenuStocksPanel.setSize(600, 200);
         buyMenuStocksListing.setEditable(false);
-        buyMenuStocksPanel.add(TradingRoom.showStockInventory(buyMenuStocksListing));
+        buyMenuStocksPanel.add(buyMenuPopupTable .getTableHeader(), BorderLayout.NORTH);
+        buyMenuStocksPanel.add(buyMenuPopupTable , BorderLayout.CENTER);
 
         //setting the submit button location
         submitBuyStockMenuButton.setBounds(115, 400, 100, 50);
