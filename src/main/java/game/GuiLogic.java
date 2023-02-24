@@ -358,6 +358,7 @@ public class GuiLogic extends javax.swing.JFrame {
 
         //setting the location of the trading room's stock holdings panel
         JTable table = TradingRoom.showStocks();
+        table.setEnabled(false);
         tradingRoomStockPanel.setBounds(120,110,560,200);
         tradingRoomStockPanel.setBackground(new Color(0,0,0,0));
         tradingRoomStockPanel.setBorder(border);
@@ -565,10 +566,10 @@ public class GuiLogic extends javax.swing.JFrame {
 
         //setting buy menu stock listing location
         JTable buyMenuPopupTable = TradingRoom.showStocks();
+        buyMenuPopupTable.setEnabled(false);
         buyMenuStocksPanel.setSize(600, 200);
-        buyMenuStocksListing.setEditable(false);
-        buyMenuStocksPanel.add(buyMenuPopupTable .getTableHeader(), BorderLayout.NORTH);
-        buyMenuStocksPanel.add(buyMenuPopupTable , BorderLayout.CENTER);
+        buyMenuStocksPanel.add(buyMenuPopupTable.getTableHeader(), BorderLayout.NORTH);
+        buyMenuStocksPanel.add(buyMenuPopupTable, BorderLayout.CENTER);
 
         //setting the submit button location
         submitBuyStockMenuButton.setBounds(115, 400, 100, 50);
@@ -636,7 +637,7 @@ public class GuiLogic extends javax.swing.JFrame {
     public void sellMenuCreator() {
         //Getting the J things
         sellMenuStocksListing = new JTextArea();
-        sellMenuStocksPanel = new JPanel();
+        sellMenuStocksPanel = new JPanel(new BorderLayout());
         sellMenuPopup = new JFrame();
         submitSellStockMenuButton = new JButton("Submit");
         cancelSellStockMenuButton = new JButton("Cancel");
@@ -648,9 +649,6 @@ public class GuiLogic extends javax.swing.JFrame {
         //adding the background
         sellMenuBackground = new ImageIcon("");
         sellMenuBackgroundImg = new JLabel(sellMenuBackground);
-
-        //setting the background dimensions
-        //setting the background picture and location
         sellMenuBackgroundImg.setBounds(0, 0, 800, 600);
 
         //Setting the frame to popup
@@ -662,9 +660,11 @@ public class GuiLogic extends javax.swing.JFrame {
         sellMenuPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //setting sell menu stock listing location
-        sellMenuStocksPanel.setSize(600,200);
-        sellMenuStocksListing.setEditable(false);
-        sellMenuStocksPanel.add(SellingRoom.showPlayerHoldings(sellMenuStocksListing));
+        JTable sellMenuPopupTable = SellingRoom.showPlayerHoldings();
+        sellMenuPopupTable.setEnabled(false);
+        sellMenuStocksPanel.setBounds(150, 5, 300, 200);
+        sellMenuStocksPanel.add(sellMenuPopupTable.getTableHeader(), BorderLayout.NORTH);
+        sellMenuStocksPanel.add(sellMenuPopupTable, BorderLayout.CENTER);
 
         //setting the submit button location
         submitSellStockMenuButton.setBounds(115,400,100,50);
