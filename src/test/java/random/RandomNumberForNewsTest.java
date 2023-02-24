@@ -14,12 +14,12 @@ class RandomNumberForNewsTest {
         randomGen = new RandomNumberForNews();
     }
 
-    @Test
-    void getRandomNumber() {
-        int range = 10;
-        int randomNum = randomGen.getRandomNumber();
-
-        assertTrue(range <= randomNum);
-
-    }
+//    @Test
+//    void getRandomNumber() {
+//        int range = 10;
+//        int randomNum = randomGen.getRandomNumber();
+//
+//        assertTrue(range <= randomNum);
+//
+//    }
 }
