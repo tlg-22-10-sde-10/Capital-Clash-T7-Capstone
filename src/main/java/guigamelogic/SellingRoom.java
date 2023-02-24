@@ -1,11 +1,14 @@
 package guigamelogic;
 
 import stock.Stock;
+import storage.StockType;
 import ui.GlobalMethodsAndAttributes;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
@@ -96,6 +99,22 @@ public class SellingRoom {
                     playerStockMap.get(playerStock)));
         }
         return sellMenuTextArea;
+    }
+
+
+    public static JTable showPlayerHoldings(){
+        String[] cols = {"Stock Name", "Quantity"};
+        DefaultTableModel tableModel = new DefaultTableModel(cols,1);
+        List<String> stocksList = playerStocks;
+        for(int i = 0; i < stocksList.size(); i++){
+            String symbol = stocksList.get(i);
+            int quantity = playerStockMap.get(symbol);
+
+            Object[] data = {symbol,quantity};
+            tableModel.addRow(data);
+        }
+
+        return new JTable(tableModel);
     }
 
 

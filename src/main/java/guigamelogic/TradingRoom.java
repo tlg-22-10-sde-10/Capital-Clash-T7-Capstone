@@ -151,6 +151,7 @@ public class TradingRoom {
         String[] cols = {"Stock Name", "Symbol", "Current Price", "Sector"};
         DefaultTableModel tableModel = new DefaultTableModel(cols,0);
         JTable stocks = new JTable(tableModel);
+
         List<Stock> stocksList = inventory.getAllStocks();
         for(int i = 0; i < stocksList.size(); i++){
             String stockName = stocksList.get(i).getStockName();
