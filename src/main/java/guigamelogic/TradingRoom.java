@@ -5,11 +5,13 @@ import players.Computer;
 import players.Player;
 import stock.Stock;
 import storage.StockInventory;
+import storage.StockType;
 import ui.GlobalMethodsAndAttributes;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -145,5 +147,24 @@ public class TradingRoom {
         }
         return stockHoldingsTextArea;
     }
+
+    public JTable showStocks(){
+        String[] cols = {"Stock Name", "Symbol", "Current Price", "Sector"};
+        DefaultTableModel tableModel = new DefaultTableModel(cols,0);
+        List<Stock> stocksList = inventory.getAllStocks();
+        for(int i = 0; i < stocksList.size(); i++){
+            String stockName = stocksList.get(i).getStockName();
+            String symbol = stocksList.get(i).getSymbol();
+            double curPrice = stocksList.get(i).getCurrentPrice();
+            StockType stockType = stocksList.get(i).getSector();
+
+            Object[] data = {stockName,symbol,curPrice,stockType};
+            tableModel.addRow(data);
+        }
+
+        return new JTable(tableModel);
+    }
+
+
 
 }
