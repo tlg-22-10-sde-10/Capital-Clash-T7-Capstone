@@ -148,7 +148,7 @@ public class TradingRoom {
         return stockHoldingsTextArea;
     }
 
-    public JTable showStocks(List<Stock> stocks){
+    public JTable showStocks(){
         String[] cols = {"Stock Name", "Symbol", "Current Price", "Sector"};
         DefaultTableModel tableModel = new DefaultTableModel(cols,0);
         List<Stock> stocksList = inventory.getAllStocks();
