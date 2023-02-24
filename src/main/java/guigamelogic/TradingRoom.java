@@ -1,16 +1,21 @@
 package guigamelogic;
 
+import game.GuiLogic;
 import players.Computer;
 import players.Player;
 import stock.Stock;
 import storage.StockInventory;
+import storage.StockType;
 import ui.GlobalMethodsAndAttributes;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static ui.GlobalMethodsAndAttributes.*;
 
@@ -19,8 +24,6 @@ public class TradingRoom {
 
     public static void menuOneBuy(int day, String stockSymbol, int numberOfStockPurchased, JTextArea textArea) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
-
-        GlobalMethodsAndAttributes.initializeGlobalInstances();
 
         if (!isValidStockSymbol(stockSymbol)) {
             showInvalidStockSymbolMessage(day, textArea);
@@ -73,7 +76,11 @@ public class TradingRoom {
             playerStockMap.put(playerStock.getSymbol(), playerStockMap.get(playerStock.getSymbol()) + numberOfStockPurchased);
         } else {
             playerStockMap.put(playerStock.getSymbol(), numberOfStockPurchased);
+
+
         }
+
+
 
         playerStocks.add(playerStock.getSymbol());
         player.setStockNames(playerStocks);
@@ -97,18 +104,15 @@ public class TradingRoom {
 
     }
 
-
     public static JTextArea showStockInventory(JTextArea buyMenuTextArea) {
 
-
-        String buyOptionTitles = "\n           Stock Name:       " + "  Stock Symbol:       " + "Current Price:       " + "Sector:\n";
-
-        buyMenuTextArea.append(buyOptionTitles);
-
+        buyMenuTextArea.append(String.format("%-10s %-20s %-15s %-18s %-11s","",
+                "Stock Name", "Symbol", "Current Price", "Sector"));
 
         for (Stock stock : inventory.getAllStocks()) {
-            buyMenuTextArea.append(stock.toString() + "\n");
+            buyMenuTextArea.append("\n" + stock.toString());
         }
+
         return buyMenuTextArea;
     }
 
@@ -118,8 +122,8 @@ public class TradingRoom {
             double playerStockBalance = player.getBalanceFromHolding(inventory);
             Object playerStock = player.getStocks() == null ? "Empty" : player.getStocks();
 
-            String playerBalance = "YOU\n" + "Stocks: " + playerStock + "\nCash Balance: $" + (player.getAccount().getCashBalance()) + "\n" + "Stock Balance: $" +
-                    (playerStockBalance) + "\n" + "Net Balance: $" + (player.getAccount().getCashBalance() + playerStockBalance);
+            String playerBalance = "  YOU\n" + "  Stocks: " + playerStock + "\n  Cash Balance: $" + String.format("%.02f", player.getAccount().getCashBalance()) + "\n" + "  Stock Balance: $" +
+                    String.format("%.02f", playerStockBalance) + "\n" + "  Net Balance: $" + String.format("%.02f", playerStockBalance + player.getAccount().getCashBalance());
 
             stockHoldingsTextArea.append(playerBalance);
 
@@ -132,14 +136,38 @@ public class TradingRoom {
         if (brother != null && inventory != null) {
 
             double brotherStockBalance = brother.getBalanceFromHolding(inventory);
-            Object brotherStock = brother.getStocks() == null ? "Empty" : player.getStocks();
+            Object brotherStock = brother.getStocks() == null ? "Empty" : brother.getStocks();
 
-            String brotherBalance = "BROTHER\n" + "Stocks: " + brotherStock + "\nCash Balance: $" + (brother.getAccount().getCashBalance()) + "\n" + "Stock Balance: $" +
-                    (brotherStockBalance) + "\n" + "Net Balance: $" + (brother.getAccount().getCashBalance() + brotherStockBalance);
+            String brotherBalance = "  BROTHER\n" + "  Stocks: " + brotherStock + "\n  Cash Balance: $" + String.format("%.02f", brother.getAccount().getCashBalance()) + "\n" + "  Stock Balance: $" +
+                    String.format("%.02f", brotherStockBalance) + "\n" + "  Net Balance: $" + String.format("%.02f", brotherStockBalance + brother.getAccount().getCashBalance());
 
             stockHoldingsTextArea.append(brotherBalance);
         }
         return stockHoldingsTextArea;
     }
+
+    public static JTable showStocks(){
+        String[] cols = {"Stock Name", "Symbol", "Current Price", "Sector"};
+        DefaultTableModel tableModel = new DefaultTableModel(cols,0);
+        JTable stocks = new JTable(tableModel);
+        List<Stock> stocksList = inventory.getAllStocks();
+
+        for(int i = 0; i < stocksList.size(); i++){
+            String stockName = stocksList.get(i).getStockName();
+            String symbol = stocksList.get(i).getSymbol();
+            double curPrice = stocksList.get(i).getCurrentPrice();
+            StockType stockType = stocksList.get(i).getSector();
+
+            Object[] data = {stockName,symbol,curPrice,stockType};
+            tableModel.addRow(data);
+        }
+        stocks.getColumnModel().getColumn(0).setPreferredWidth(150);
+        stocks.getColumnModel().getColumn(1).setPreferredWidth(100);
+        stocks.getColumnModel().getColumn(2).setPreferredWidth(100);
+        stocks.getColumnModel().getColumn(3).setPreferredWidth(180);
+        return stocks;
+    }
+
+
 
 }

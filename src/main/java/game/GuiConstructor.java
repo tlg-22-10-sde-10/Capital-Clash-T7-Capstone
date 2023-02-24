@@ -7,7 +7,7 @@ public class GuiConstructor extends JFrame {
 
    public GuiConstructor(){
        setTitle("Welcome to: Capital Clash 2.0 (Team 7)");
-       setSize(800,600);
+       setSize(800,620);
        setLocationRelativeTo(null);
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        setLayout(null);
