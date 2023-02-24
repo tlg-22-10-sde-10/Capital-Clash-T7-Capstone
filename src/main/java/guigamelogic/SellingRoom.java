@@ -104,7 +104,8 @@ public class SellingRoom {
 
     public static JTable showPlayerHoldings(){
         String[] cols = {"Stock Name", "Quantity"};
-        DefaultTableModel tableModel = new DefaultTableModel(cols,1);
+        DefaultTableModel tableModel = new DefaultTableModel(cols,0);
+        JTable stocks = new JTable(tableModel);
         List<String> stocksList = playerStocks;
         for(int i = 0; i < stocksList.size(); i++){
             String symbol = stocksList.get(i);
@@ -114,7 +115,7 @@ public class SellingRoom {
             tableModel.addRow(data);
         }
 
-        return new JTable(tableModel);
+        return stocks;
     }
 
 
