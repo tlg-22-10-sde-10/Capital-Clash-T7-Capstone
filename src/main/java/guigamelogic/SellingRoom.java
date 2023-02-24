@@ -89,17 +89,17 @@ public class SellingRoom {
     }
 
 
-    public static JTextArea showPlayerHoldings(JTextArea sellMenuTextArea) {
-
-        sellMenuTextArea.append(String.format("%-15s%-20s\n","", "         YOUR HOLDINGS      "));
-        sellMenuTextArea.append(String.format("%-15s%-20s%-15s\n","", "Stock Symbol", "Quantity"));
-
-        for (String playerStock : playerStocks) {
-            sellMenuTextArea.append(String.format("%-15s%-20s%15s\n","", playerStock,
-                    playerStockMap.get(playerStock)));
-        }
-        return sellMenuTextArea;
-    }
+//    public static JTextArea showPlayerHoldings(JTextArea sellMenuTextArea) {
+//
+//        sellMenuTextArea.append(String.format("%-15s%-20s\n","", "         YOUR HOLDINGS      "));
+//        sellMenuTextArea.append(String.format("%-15s%-20s%-15s\n","", "Stock Symbol", "Quantity"));
+//
+//        for (String playerStock : playerStocks) {
+//            sellMenuTextArea.append(String.format("%-15s%-20s%15s\n","", playerStock,
+//                    playerStockMap.get(playerStock)));
+//        }
+//        return sellMenuTextArea;
+//    }
 
 
     public static JTable showPlayerHoldings(){
@@ -107,11 +107,12 @@ public class SellingRoom {
         DefaultTableModel tableModel = new DefaultTableModel(cols,0);
         JTable stocks = new JTable(tableModel);
         List<String> stocksList = playerStocks;
+
         for(int i = 0; i < stocksList.size(); i++){
             String symbol = stocksList.get(i);
             int quantity = playerStockMap.get(symbol);
 
-            Object[] data = {symbol,quantity};
+            Object[] data = {symbol, quantity};
             tableModel.addRow(data);
         }
 
